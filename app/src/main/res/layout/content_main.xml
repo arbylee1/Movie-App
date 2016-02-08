@@ -21,7 +21,8 @@
         android:clickable="true"
         android:enabled="true"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_alignStart="@+id/textView"
+        android:nestedScrollingEnabled="false" />
 
     <Button
         android:layout_width="wrap_content"
