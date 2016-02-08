@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void goToMain() {
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), Main2Activity.class);
         startActivity(i);
     }
 }
