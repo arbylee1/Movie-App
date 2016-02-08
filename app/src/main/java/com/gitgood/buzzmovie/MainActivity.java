@@ -25,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupVariables();
         final Button loginButton = (Button) findViewById(R.id.LoginButton);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
