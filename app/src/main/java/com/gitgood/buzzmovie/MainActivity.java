@@ -13,6 +13,14 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EditText username;
+    private EditText password;
+    private Button login;
+    private TextView loginLockedTV;
+    private TextView attemptsLeftTV;
+    private TextView numberOfRemainingLoginAttemptsTV;
+    int numberOfRemainingLoginAttempts = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +44,37 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+    public void authenticateLogin(View view) {
+        if (username.getText().toString().equals("user") &&
+                password.getText().toString().equals("user")) {
+            Toast.makeText(getApplicationContext(), "Hello user!",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Seems like you 're not user!",
+                    Toast.LENGTH_SHORT).show();
+            numberOfRemainingLoginAttempts--;
+            attemptsLeftTV.setVisibility(View.VISIBLE);
+            numberOfRemainingLoginAttemptsTV.setVisibility(View.VISIBLE);
+            numberOfRemainingLoginAttemptsTV.setText(Integer.toString(numberOfRemainingLoginAttempts));
+
+            if (numberOfRemainingLoginAttempts == 0) {
+                login.setEnabled(false);
+                loginLockedTV.setVisibility(View.VISIBLE);
+                loginLockedTV.setBackgroundColor(Color.RED);
+                loginLockedTV.setText("LOGIN LOCKED!!!");
+            }
+        }
+    }
+
+    private void setupVariables() {
+        username = (EditText) findViewById(R.id.usernameET);
+        password = (EditText) findViewById(R.id.passwordET);
+        login = (Button) findViewById(R.id.loginBtn);
+        loginLockedTV = (TextView) findViewById(R.id.loginLockedTV);
+        attemptsLeftTV = (TextView) findViewById(R.id.attemptsLeftTV);
+        numberOfRemainingLoginAttemptsTV = (TextView) findViewById(R.id.numberOfRemainingLoginAttemptsTV);
+        numberOfRemainingLoginAttemptsTV.setText(Integer.toString(numberOfRemainingLoginAttempts));
     }
 
     @Override
