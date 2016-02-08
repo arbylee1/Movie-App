@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT);
                 toast.show();
-                goToMain();
+                goToMain2();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -169,6 +169,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void goToMain() {
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+    }
+    private void goToMain2() {
         Intent i = new Intent(getApplicationContext(), Main2Activity.class);
         startActivity(i);
     }
