@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToMain();
+                finish();
             }
         });
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -171,12 +171,10 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = null;
         }
     }
-    private void goToMain() {
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
-    }
+
     private void goToMain2() {
         Intent i = new Intent(getApplicationContext(), Main2Activity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 }
