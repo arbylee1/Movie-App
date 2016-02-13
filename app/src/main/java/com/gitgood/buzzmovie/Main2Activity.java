@@ -19,6 +19,7 @@ public class Main2Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Button logOutButton = (Button) findViewById(R.id.LogOut);
+        Button userProfileButton = (Button) findViewById(R.id.userProfileButton);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +34,14 @@ public class Main2Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
+
+        userProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                 startActivity(i);
             }
         });

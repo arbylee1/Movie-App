@@ -9,24 +9,33 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.gitgood.buzzmovie.Main2Activity"
-    tools:showIn="@layout/activity_main2">
+    tools:context="com.gitgood.buzzmovie.ProfileActivity"
+    tools:showIn="@layout/activity_profile">
 
-    <Button
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log Out"
-        android:id="@+id/LogOut"
+        android:id="@+id/userProfileListView"
+        android:layout_below="@+id/editText"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_marginTop="47dp"
+        android:text="User Profile"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile"
-        android:id="@+id/userProfileButton"
+        android:text="Edit"
+        android:id="@+id/editProfileButton"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/userProfileListView"
         android:clickable="true" />
+
 </RelativeLayout>

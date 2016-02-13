@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Button loginButton = (Button) findViewById(R.id.LoginButton);
+        final Button registrationButton = (Button) findViewById(R.id.RegistrationButton);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -38,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 goToLogin();
+            }
+        });
+        registrationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoRegister();
             }
         });
 
@@ -75,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void goToLogin() {
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
+    }
+
+    private void gotoRegister() {
+        Intent i = new Intent(getApplicationContext(), RegistrationActivity.class);
         startActivity(i);
     }
 }

@@ -30,7 +30,8 @@
         android:text="Registration"
         android:id="@+id/RegistrationButton"
         android:layout_alignTop="@+id/LoginButton"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/textView"
+        android:nestedScrollingEnabled="false" />
 
     <TextView
         android:layout_width="wrap_content"
