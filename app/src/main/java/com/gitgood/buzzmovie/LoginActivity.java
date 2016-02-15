@@ -103,8 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            // Perform the user login attempt.
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
