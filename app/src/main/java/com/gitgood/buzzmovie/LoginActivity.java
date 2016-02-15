@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private EditText mEmailView;
+    private EditText mUsernameView;
     private EditText mPasswordView;
     private SharedPreferences sharedpreferences;
 
@@ -33,9 +33,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (EditText) findViewById(R.id.email);
+        mUsernameView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
-        Button mEmailSignInButton = (Button) findViewById(R.id.signin);
+        Button mUsernameSignInButton = (Button) findViewById(R.id.signin);
         Button back = (Button) findViewById(R.id.logintomain);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        mUsernameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -59,11 +59,11 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void attemptLogin() {
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String email = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -78,8 +78,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
 
@@ -100,18 +100,18 @@ public class LoginActivity extends AppCompatActivity {
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mUsername;
         private final String mPassword;
 
         UserLoginTask(String email, String password) {
-            mEmail = email;
+            mUsername = email;
             mPassword = password;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             sharedpreferences = getSharedPreferences(getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
-            String pass = sharedpreferences.getString(mEmail,null);
+            String pass = sharedpreferences.getString(mUsername,null);
             return (pass != null) && mPassword.equals(pass);
         }
 

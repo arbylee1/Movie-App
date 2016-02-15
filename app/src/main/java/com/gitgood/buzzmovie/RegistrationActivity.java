@@ -21,17 +21,15 @@ public class RegistrationActivity extends AppCompatActivity {
     private UserRegistrationTask mAuthTask = null;
 
     // UI references.
-    private EditText mEmailView;
+    private EditText mUsernameView;
     private EditText mPasswordView;
     private SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         sharedpreferences = getSharedPreferences(getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
-        mEmailView = (EditText) findViewById(R.id.usernameText);
+        mUsernameView = (EditText) findViewById(R.id.usernameText);
         mPasswordView = (EditText) findViewById(R.id.passwordText);
         Button registrationButton = (Button) findViewById(R.id.RegSubmitButton);
         Button cancelButton = (Button) findViewById(R.id.RegCancelButton);
@@ -51,11 +49,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void attemptRegistration() {
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String email = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -70,8 +68,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
 
@@ -86,17 +84,17 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     public class UserRegistrationTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mUsername;
         private final String mPassword;
 
         UserRegistrationTask(String email, String password) {
-            mEmail = email;
+            mUsername = email;
             mPassword = password;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return sharedpreferences.contains(mEmail);
+            return sharedpreferences.contains(mUsername);
         }
 
         @Override
@@ -104,7 +102,7 @@ public class RegistrationActivity extends AppCompatActivity {
             mAuthTask = null;
             if (success) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(mEmail, mPassword);
+                editor.putString(mUsername, mPassword);
                 editor.apply();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 Toast toast = Toast.makeText(getApplicationContext(), "Account creation successful", Toast.LENGTH_SHORT);
@@ -112,8 +110,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             } else {
-                mEmailView.setError(getString(R.string.error_duplicate_email));
-                mEmailView.requestFocus();
+                mUsernameView.setError(getString(R.string.error_duplicate_email));
+                mUsernameView.requestFocus();
             }
         }
 
