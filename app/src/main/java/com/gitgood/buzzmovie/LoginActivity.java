@@ -1,6 +1,8 @@
 package com.gitgood.buzzmovie;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,12 +21,7 @@ import android.widget.Toast;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity {
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "kermit@:thefrog","user:pass"
-    };
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -33,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -96,11 +94,6 @@ public class LoginActivity extends AppCompatActivity {
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        }
-         else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
         }
@@ -115,16 +108,6 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean isEmailValid(String email) {
-//        return email.contains("@");
-        return true;
-    }
-
-    private boolean isPasswordValid(String password) {
-//        return password.length() > 4;
-        return true;
     }
 
     /**
@@ -143,14 +126,9 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-            return false;
+            sharedpreferences = getSharedPreferences(getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
+            String pass = sharedpreferences.getString(mEmail,null);
+            return (pass != null) && mPassword.equals(pass);
         }
 
         @Override
