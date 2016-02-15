@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         sharedpreferences = getSharedPreferences(getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
         mUsernameView = (EditText) findViewById(R.id.usernameText);
+        mUsernameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mPasswordView = (EditText) findViewById(R.id.passwordText);
         Button registrationButton = (Button) findViewById(R.id.RegSubmitButton);
         Button cancelButton = (Button) findViewById(R.id.RegCancelButton);
@@ -87,8 +89,8 @@ public class RegistrationActivity extends AppCompatActivity {
         private final String mUsername;
         private final String mPassword;
 
-        UserRegistrationTask(String email, String password) {
-            mUsername = email;
+        UserRegistrationTask(String username, String password) {
+            mUsername = username;
             mPassword = password;
         }
 
