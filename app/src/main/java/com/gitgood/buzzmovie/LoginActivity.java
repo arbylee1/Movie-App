@@ -27,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private EditText mUsernameView;
     private EditText mPasswordView;
-    private SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,8 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            sharedpreferences = getSharedPreferences(getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
+            SharedPreferences sharedpreferences = getSharedPreferences(
+                    getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
             String pass = sharedpreferences.getString(mUsername,null);
             return (pass != null) && mPassword.equals(pass);
         }
@@ -123,6 +123,11 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT);
                 toast.show();
+                SharedPreferences sharedpreferences = getSharedPreferences(
+                        getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(mUsername, mPassword);
+                editor.apply();
                 goToMain2();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
