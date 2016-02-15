@@ -5,18 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -27,7 +21,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private UserRegistrationTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private SharedPreferences sharedpreferences;
     @Override
@@ -37,8 +31,8 @@ public class RegistrationActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sharedpreferences = getSharedPreferences(getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mEmailView = (EditText) findViewById(R.id.usernameText);
+        mPasswordView = (EditText) findViewById(R.id.passwordText);
         Button registrationButton = (Button) findViewById(R.id.RegSubmitButton);
         Button cancelButton = (Button) findViewById(R.id.RegCancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +62,8 @@ public class RegistrationActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -77,13 +71,6 @@ public class RegistrationActivity extends AppCompatActivity {
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
-        //check that the username is not taken. Replace later with server-side authentication.
-        if(sharedpreferences.getString(email, null) != null) {
-            mEmailView.setError(getString(R.string.error_duplicate_email));
             focusView = mEmailView;
             cancel = true;
         }
@@ -109,26 +96,24 @@ public class RegistrationActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(mEmail, mPassword);
-            editor.apply();
-            Toast toast = Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT);
-            toast.show();
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
-            return true;
+            return sharedpreferences.contains(mEmail);
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             if (success) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(mEmail, mPassword);
+                editor.apply();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 Toast toast = Toast.makeText(getApplicationContext(), "Account creation successful", Toast.LENGTH_SHORT);
                 toast.show();
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                mEmailView.setError(getString(R.string.error_duplicate_email));
+                mEmailView.requestFocus();
             }
         }
 
