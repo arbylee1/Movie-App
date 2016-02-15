@@ -6,10 +6,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +15,7 @@ import android.widget.Toast;
 
 public class RegistrationActivity extends AppCompatActivity {
     /**
-     * Keep track of the login task to ensure we can cancel it if requested.
+     * Keep track of the registration task to ensure we can cancel it if requested.
      */
 
     private UserRegistrationTask mAuthTask = null;
@@ -56,7 +54,7 @@ public class RegistrationActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mUsernameView.getText().toString();
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -69,8 +67,8 @@ public class RegistrationActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        // Check for a valid username
+        if (TextUtils.isEmpty(username)) {
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
@@ -81,10 +79,11 @@ public class RegistrationActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            mAuthTask = new UserRegistrationTask(email, password);
+            mAuthTask = new UserRegistrationTask(username, password);
             mAuthTask.execute((Void) null);
         }
     }
+
     public class UserRegistrationTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mUsername;
@@ -97,8 +96,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            Log.i("yo", mUsername);
-            Log.i("yo", String.valueOf(sharedpreferences.contains(mUsername)));
             return !sharedpreferences.contains(mUsername);
         }
 
