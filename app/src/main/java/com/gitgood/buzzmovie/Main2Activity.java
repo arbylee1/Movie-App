@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.util.Log;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -31,13 +32,18 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedpreferences = getSharedPreferences(
+                getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences sharedpreferences = getSharedPreferences(
                         getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
+
+//                editor.clear();
                 editor.apply();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -48,7 +54,7 @@ public class Main2Activity extends AppCompatActivity {
         userProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                Intent i = new Intent(getApplicationContext(), ProfActivity.class);
                 startActivity(i);
             }
         });
