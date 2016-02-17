@@ -10,23 +10,31 @@ public class User {
     private String email;
     private String name;
     private String userName;
+    private String password;
     private String major;
     private String interests;
 
-    public User(String email, String name, String userName, String major) {
+    public User(String email, String name, String userName, String password, String major) {
         this.email = email;
         this.name = name;
         this.userName = userName;
+        this.password = password;
         this.major = major;
         this.interests = "";
     }
 
-    public User() {
+    public User(String name, String userName, String password) {
         this.email = "";
-        this.name = "";
-        this.userName = "";
+        this.name = name;
+        this.userName = userName;
+        this.password = password;
         this.major = "";
         this.interests = "";
+    }
+
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -40,6 +48,8 @@ public class User {
     public String getUserName() {
         return userName;
     }
+
+    public String getPassword() { return password; }
 
     public String getMajor() {
         return major;
@@ -60,6 +70,8 @@ public class User {
     public void setUserName(String input) {
         this.userName = input;
     }
+
+    public void setPassword(String input) {this.password = input; }
 
     public void setMajor(String input) {
         this.major = input;
