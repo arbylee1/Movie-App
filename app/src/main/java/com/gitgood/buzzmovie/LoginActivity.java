@@ -126,7 +126,8 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences sharedpreferences = getSharedPreferences(
                         getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(mUsername, mPassword);
+                editor.putString("username", mUsername);
+                editor.putString("password", mPassword);
                 editor.apply();
                 goToMain2();
             } else {
