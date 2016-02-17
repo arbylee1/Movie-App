@@ -43,7 +43,7 @@ public class Main2Activity extends AppCompatActivity {
                         getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
-//                editor.clear();
+                editor.clear();
                 editor.apply();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

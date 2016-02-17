@@ -84,9 +84,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:text="Cancel"
         android:id="@+id/bbCancel"
         android:layout_alignTop="@+id/bbUpdate"
-        android:layout_alignStart="@+id/textView6" />
+        android:layout_toEndOf="@+id/textView5" />
 
 </RelativeLayout>

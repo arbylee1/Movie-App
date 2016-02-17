@@ -35,10 +35,6 @@
             android:label="@string/title_activity_registration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ProfActivity"
             android:label="@string/title_activity_prof"
             android:theme="@style/AppTheme.NoActionBar"></activity>
