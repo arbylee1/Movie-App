@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 public class ProfActivity extends AppCompatActivity {
 
+    // set all modifiedable widgets in Activity
     private EditText mName;
     private EditText mmMajor;
     private EditText mInterest;
@@ -27,6 +28,8 @@ public class ProfActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prof);
+
+        // Set cancel button => Resets the View
         bCancel = (Button) findViewById(R.id.bbCancel);
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,13 +39,15 @@ public class ProfActivity extends AppCompatActivity {
             }
         });
 
+        // Instatiate set all modifiedable widgets
         mName = (EditText) findViewById(R.id.eName);
         mmMajor = (EditText) findViewById(R.id.eMajor);
         mInterest = (EditText) findViewById(R.id.eInterest);
 
+        // Logic to get Current User and all associated fields aswell as fill current values into
+        // the view
         SharedPreferences currentUser = getSharedPreferences(
                 getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
-
 
         SharedPreferences userInfo = getSharedPreferences(
                 getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
@@ -51,6 +56,9 @@ public class ProfActivity extends AppCompatActivity {
         mName.setText(userInfo.getString(currentUsername + "_name", "Set Name" ));
         mmMajor.setText(userInfo.getString(currentUsername + "_major", "Set Major"));
         mInterest.setText(userInfo.getString(currentUsername + "_interests", "Set Interests"));
+
+        // Set update button and logic. Logic will take all field values and update user fields in
+        // the backend
         bUpdate = (Button) findViewById(R.id.bbUpdate);
         final SharedPreferences.Editor editor2 = userInfo.edit();
         bUpdate.setOnClickListener(new View.OnClickListener() {
@@ -61,11 +69,12 @@ public class ProfActivity extends AppCompatActivity {
                 editor2.putString(currentUsername + "_interests", mInterest.getText().toString());
                 editor2.apply();
                 Intent i = new Intent(getApplicationContext(), Main2Activity.class);
+                Toast toast = Toast.makeText(getApplicationContext(), "Profile Succesfully updated", Toast.LENGTH_SHORT);
+                toast.show();
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });
-
     }
 
 }

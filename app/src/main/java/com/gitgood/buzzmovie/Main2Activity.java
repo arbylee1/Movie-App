@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.util.Log;
 
+
+// Landing page for once the User has passed verification
 public class Main2Activity extends AppCompatActivity {
 
     @Override
@@ -36,13 +38,15 @@ public class Main2Activity extends AppCompatActivity {
                 getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
 
+        // Logout button clears the shared preferences of Current user and takes User back to login
+        // Screen
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // get and then clear Current User
                 SharedPreferences sharedpreferences = getSharedPreferences(
                         getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-
                 editor.clear();
                 editor.apply();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
@@ -51,6 +55,7 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
+        // take User to Profile Form Screen
         userProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
