@@ -25,6 +25,7 @@ public class Main2Activity extends AppCompatActivity {
 
         Button logOutButton = (Button) findViewById(R.id.LogOut);
         Button userProfileButton = (Button) findViewById(R.id.userProfileButton);
+        Button searchButton = (Button) findViewById(R.id.searchButton);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +61,14 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ProfActivity.class);
+                startActivity(i);
+            }
+        });
+        // take user to Search Screen
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(i);
             }
         });

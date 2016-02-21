@@ -22,4 +22,12 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="UserInfo">UserInfo</string>
     <string name="title_activity_prof">ProfActivity</string>
+    <!-- Strings related to search -->
+    <string name="menu_search">Search</string>
+    <string name="search_result">Search Result!</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="search_hint">Type and Search</string>
+    <string name="top_movies">Top Movies</string>
+    <string name="new_movies">New Movies</string>
+
 </resources>

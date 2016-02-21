@@ -29,4 +29,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:clickable="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/searchButton"
+        android:layout_alignBottom="@+id/userProfileButton"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
