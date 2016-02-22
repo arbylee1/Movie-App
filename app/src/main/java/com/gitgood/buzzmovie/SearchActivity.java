@@ -134,8 +134,8 @@ public class SearchActivity extends ActionBarActivity {
                     public void onErrorResponse(VolleyError error) {
                         response = "JSon Request Failed!!";
                         //show error on phone
-                        TextView view = (TextView) findViewById(R.id.textView2);
-                        view.setText(response);
+//                        TextView view = (TextView) findViewById(R.id.textView2);
+//                        view.setText(response);
                     }
                 });
         //this actually queues up the async response with Volley
