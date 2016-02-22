@@ -84,7 +84,6 @@ public class SearchActivity extends ActionBarActivity {
         if (id == ROTTEN_TOMATO_GET_MATCH) {
             EditText SearchText = (EditText) findViewById(R.id.searchText);
             String searchFor = SearchText.getText().toString();
-            Log.v("||DAN||", searchFor);
             url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" + searchFor + "&page_limit=20&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
             Log.v("||DAN||", url);
         } else if (id == ROTTEN_TOMATO_GET_NEW_DVD) {
@@ -99,10 +98,6 @@ public class SearchActivity extends ActionBarActivity {
                     public void onResponse(JSONObject resp) {
                         //handle a valid response coming back.  Getting this string mainly for debug
                         response = resp.toString();
-                        //printing first 500 chars of the response.  Only want to do this for debug
-//                                TextView view = (TextView) findViewById(R.id.textView2);
-//                                view.setText(response.substring(0, 500));
-                        Log.v("DDDDDDD",response);
                         //Now we parse the information.  Looking at the format, everything encapsulated in RestResponse object
                         JSONObject obj1 = null;
                         JSONArray array = null;
@@ -120,7 +115,6 @@ public class SearchActivity extends ActionBarActivity {
                                 //for each array element, we have to create an object
                                 JSONObject jsonObject = array.getJSONObject(i);
                                 Movie s = new Movie(jsonObject.optString("title"), jsonObject.optString("id"),jsonObject.optString("year"),jsonObject.optString("mpaa_rating") );
-                                Log.v("DDDDDDD3",jsonObject.optString("title"));
                                 assert jsonObject != null;
 
                                 //save the object for later
@@ -149,7 +143,6 @@ public class SearchActivity extends ActionBarActivity {
 
     }
     private void changeView(ArrayList<Movie> movies) {
-        Log.v("|E|", "WE IN PASS");
         Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("SEARCH", movies);

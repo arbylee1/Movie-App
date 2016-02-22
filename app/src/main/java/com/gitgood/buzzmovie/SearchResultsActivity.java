@@ -26,14 +26,12 @@ public class SearchResultsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         handleIntent(getIntent());
-        Log.v("ME", "WE IN SEARCH VIEW");
 
         movies = (ArrayList<Movie>) getIntent().getSerializableExtra("SEARCH");
         String[] moviesTitles = new String[20];
         for (int i = 0; i < movies.size(); i++) {
             moviesTitles[i] = movies.get(i).toString();
         }
-        Log.v("ME", "WE IN SEARCH VIEW" + movies.get(1).getMovie());
 
         listView = (ListView) findViewById(R.id.list);
 
@@ -41,7 +39,6 @@ public class SearchResultsActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1, android.R.id.text1, moviesTitles);
 
         listView.setAdapter(adapter);
-        Log.v("ME", "Done");
     }
 
     @Override
