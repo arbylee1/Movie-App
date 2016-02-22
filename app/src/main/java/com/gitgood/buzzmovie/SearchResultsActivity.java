@@ -8,14 +8,40 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.util.Log;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.view.KeyEvent;
+
+import java.util.ArrayList;
 
 public class SearchResultsActivity extends ActionBarActivity {
+
+    ArrayList<Movie> movies;
+    ListView listView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         handleIntent(getIntent());
+        Log.v("ME", "WE IN SEARCH VIEW");
+
+        movies = (ArrayList<Movie>) getIntent().getSerializableExtra("SEARCH");
+        String[] moviesTitles = new String[20];
+        for (int i = 0; i < movies.size(); i++) {
+            moviesTitles[i] = movies.get(i).toString();
+        }
+        Log.v("ME", "WE IN SEARCH VIEW" + movies.get(1).getMovie());
+
+        listView = (ListView) findViewById(R.id.list);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, moviesTitles);
+
+        listView.setAdapter(adapter);
+        Log.v("ME", "Done");
     }
 
     @Override
@@ -43,5 +69,14 @@ public class SearchResultsActivity extends ActionBarActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search
         }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
