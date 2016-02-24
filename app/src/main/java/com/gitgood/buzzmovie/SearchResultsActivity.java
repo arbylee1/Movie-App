@@ -27,17 +27,19 @@ public class SearchResultsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_result);
         handleIntent(getIntent());
 
+        // get all movies from intent.extra and get all the titles to be display in list
         movies = (ArrayList<Movie>) getIntent().getSerializableExtra("SEARCH");
         String[] moviesTitles = new String[20];
         for (int i = 0; i < movies.size(); i++) {
             moviesTitles[i] = movies.get(i).toString();
         }
 
+        // get list view from acitivity content
         listView = (ListView) findViewById(R.id.list);
 
+        //instantie and set adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, moviesTitles);
-
         listView.setAdapter(adapter);
     }
 
@@ -68,6 +70,7 @@ public class SearchResultsActivity extends ActionBarActivity {
         }
     }
 
+    // configure back button to take us back to previus overall search ativity
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))

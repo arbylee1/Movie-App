@@ -38,23 +38,26 @@ public class SearchActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Load all contents and prepare Volley Queue
         setContentView(R.layout.activity_search);
         queue = Volley.newRequestQueue(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // load in all buttons and text edit also set even methods
         MenuInflater inflater = getMenuInflater();
         // Inflate menu to add items to action bar if it is present.
         inflater.inflate(R.menu.search, menu);
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+//        SearchManager searchManager =
+//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView =
+//                (SearchView) menu.findItem(R.id.menu_search).getActionView();
+//        searchView.setSearchableInfo(
+//                searchManager.getSearchableInfo(getComponentName()));
 
+        // match search button
         Button searchButton = (Button) findViewById(R.id.button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +65,7 @@ public class SearchActivity extends ActionBarActivity {
                 ContactRottenTomatoes(ROTTEN_TOMATO_GET_MATCH);
             }
         });
+        //Top dvd button
         Button TopDVDButton = (Button) findViewById(R.id.buttonDvd);
         TopDVDButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +73,7 @@ public class SearchActivity extends ActionBarActivity {
                 ContactRottenTomatoes(ROTTEN_TOMATO_GET_NEW_DVD);
             }
         });
+        // upcoming movie button
         Button NewRelButton = (Button) findViewById(R.id.buttonRel);
         NewRelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,18 +85,20 @@ public class SearchActivity extends ActionBarActivity {
     }
 
     private void ContactRottenTomatoes (int id) {
+        // All search buttons use this method the int destiguishes what search to use
         String url = "";
         if (id == ROTTEN_TOMATO_GET_MATCH) {
             EditText SearchText = (EditText) findViewById(R.id.searchText);
             String searchFor = SearchText.getText().toString();
-            url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" + searchFor + "&page_limit=20&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
+            String my_new_str = searchFor.replaceAll(" ", "%20;");
+            url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" + my_new_str + "&page_limit=20&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
             Log.v("||DAN||", url);
         } else if (id == ROTTEN_TOMATO_GET_NEW_DVD) {
            url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?page_limit=20&page=1&country=us&apikey=yedukp76ffytfuy24zsqk7f5";
         } else if (id == ROTTEN_TOMATO_GET_UPCOMING_MOVIES) {
            url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?page_limit=20&page=1&country=us&apikey=yedukp76ffytfuy24zsqk7f5";
         }
-
+        // once rest url is logically choose and built prepare callout and prepare parsing method
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -144,6 +151,7 @@ public class SearchActivity extends ActionBarActivity {
     }
     private void changeView(ArrayList<Movie> movies) {
         Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
+        // send all movies into next activity
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("SEARCH", movies);
         startActivity(i);
