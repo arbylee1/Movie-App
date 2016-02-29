@@ -43,7 +43,17 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
         averageRating = (TextView) findViewById(R.id.averageRating);
-        String average = "Average Rating: " + twoPrecision.format(movie.getAverageRating());
+        updateText();
+    }
+    private void updateText() {
+        float numRatings = movie.getNumRatings();
+        String average = null;
+        if(numRatings == 0) {
+            average = "Average Rating: " + twoPrecision.format(movie.getAverageRating()) + " (out of :"
+            + numRatings + " votes)";
+        } else {
+            average = "No user ratings yet!";
+        }
         averageRating.setText(average);
     }
     private void updateRating() {
@@ -69,7 +79,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         userInfoEditor.apply();
         movieDataEditor.apply();
         previousUserRating = newUserRating;
-        String average = "Average Rating: " + twoPrecision.format(movie.getAverageRating());
-        averageRating.setText(average);
+        updateText();
     }
 }
