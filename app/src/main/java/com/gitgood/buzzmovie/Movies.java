@@ -10,12 +10,12 @@ import java.util.Map;
  */
 public class Movies {
     /**
-     *
+     * Monostate class to store the Movies most recently searched for by the user.
      */
         public static final List<Movie> ITEMS = new ArrayList<>();
 
         /**
-         * A map of Movies  by Name.
+         * A map of Movies by Name.
          */
         public static final Map<String, Movie> ITEM_MAP = new HashMap<>();
 
@@ -23,13 +23,8 @@ public class Movies {
             ITEMS.add(item);
             ITEM_MAP.put(item.getRottenTomatoID(), item);
         }
-
-        private static String makeDetails(int position) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Details about Movie: ").append(position);
-            for (int i = 0; i < position; i++) {
-                builder.append("\nMore details information here.");
-            }
-            return builder.toString();
-        }
+     public static void clear() {
+         ITEMS.clear();
+         ITEM_MAP.clear();
+     }
 }

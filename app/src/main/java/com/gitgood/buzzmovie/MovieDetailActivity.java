@@ -31,6 +31,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 getResources().getString(R.string.MovieData), Context.MODE_PRIVATE);
         currentUser = CurrentUser.getInstance();
         movie = Movies.ITEM_MAP.get(getIntent().getExtras().get("Movie"));
+        Log.d("Hi", String.valueOf(System.identityHashCode(movie)));
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         previousUserRating = userInfo.getFloat(movie.getRottenTomatoID() +
                 currentUser.getUsername() + "rating", 0);

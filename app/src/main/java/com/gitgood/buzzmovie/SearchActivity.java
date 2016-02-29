@@ -117,9 +117,9 @@ public class SearchActivity extends AppCompatActivity {
                         }
                         assert obj1 != null;
                         //From that object, we extract the array of actual data labeled result
-
+                        Movies.clear();
                         SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
-                        ArrayList<Movie> movies = new ArrayList<>();
+                        ArrayList<String> movies = new ArrayList<>();
                         for(int i=0; i < array.length(); i++) {
                             try {
                                 //for each array element, we have to create an object
@@ -135,7 +135,7 @@ public class SearchActivity extends AppCompatActivity {
 
                                 Movie s = new Movie(title, id, year, rating, synopsis, numRatings, averageRating);
                                 //save the object for later
-                                movies.add(s);
+                                Movies.addItem(s);
 
                             } catch (JSONException e) {
                                 Log.d("VolleyApp", "Failed to get JSON object");
@@ -143,7 +143,7 @@ public class SearchActivity extends AppCompatActivity {
                             }
                         }
                         //once we have all data, then go to list screen
-                        changeView(movies);
+                        changeView();
                     }
                 }, new Response.ErrorListener() {
 
@@ -159,11 +159,10 @@ public class SearchActivity extends AppCompatActivity {
         queue.add(jsObjRequest);
 
     }
-    private void changeView(ArrayList<Movie> movies) {
+    private void changeView() {
         Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
         // send all movies into next activity
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("SEARCH", movies);
         startActivity(i);
     }
 

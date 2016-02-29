@@ -27,23 +27,13 @@ import java.util.List;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
-    ArrayList<Movie> movies;
-    ListView listView ;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        handleIntent(getIntent());
-
-        // get all movies from intent.extra and get all the titles to be display in list
-        movies = (ArrayList<Movie>) getIntent().getSerializableExtra("SEARCH");
-        for(Movie movie : movies) {
-            Movies.addItem(movie);
-        }
-        // get list view from acitivity content
+        // get list view from activity content
         View recyclerView = findViewById(R.id.list);
-        //instantie and set adapter
+        //instantiate and set adapter
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
@@ -67,7 +57,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search
@@ -118,6 +107,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, MovieDetailActivity.class);
+                    Log.d("Hi", String.valueOf(System.identityHashCode(holder.movieItem)));
                     intent.putExtra("Movie", holder.movieItem.getRottenTomatoID());
                     context.startActivity(intent);
                 }
