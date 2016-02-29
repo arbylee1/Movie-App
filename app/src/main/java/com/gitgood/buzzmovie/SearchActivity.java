@@ -3,8 +3,10 @@ package com.gitgood.buzzmovie;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +30,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends ActionBarActivity {
+public class SearchActivity extends AppCompatActivity {
     public final static int ROTTEN_TOMATO_GET_MATCH = 1;
     public final static int ROTTEN_TOMATO_GET_NEW_DVD = 2;
     public final static int ROTTEN_TOMATO_GET_UPCOMING_MOVIES = 3;
@@ -116,14 +118,21 @@ public class SearchActivity extends ActionBarActivity {
                         assert obj1 != null;
                         //From that object, we extract the array of actual data labeled result
 
+                        SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
                         ArrayList<Movie> movies = new ArrayList<>();
                         for(int i=0; i < array.length(); i++) {
                             try {
                                 //for each array element, we have to create an object
                                 JSONObject jsonObject = array.getJSONObject(i);
-                                Movie s = new Movie(jsonObject.optString("title"), jsonObject.optString("id"),jsonObject.optString("year"),jsonObject.optString("mpaa_rating") );
                                 assert jsonObject != null;
-
+                                String title = jsonObject.optString("title");
+                                String id = jsonObject.optString("id");
+                                String year = jsonObject.optString("year");
+                                String rating = jsonObject.optString("mpaa_rating");
+                                String synopsis = jsonObject.optString("synopsis");
+                                int[] ratings = new int[5];
+                                float userRating = sharedPreferences.getFloat("AverageUserRating", 0.0f);
+                                Movie s = new Movie(title, id, year, rating, synopsis, userRating, ratings);
                                 //save the object for later
                                 movies.add(s);
 

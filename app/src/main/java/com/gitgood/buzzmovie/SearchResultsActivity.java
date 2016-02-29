@@ -4,19 +4,28 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.view.KeyEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SearchResultsActivity extends ActionBarActivity {
+public class SearchResultsActivity extends AppCompatActivity {
 
     ArrayList<Movie> movies;
     ListView listView ;
@@ -29,18 +38,13 @@ public class SearchResultsActivity extends ActionBarActivity {
 
         // get all movies from intent.extra and get all the titles to be display in list
         movies = (ArrayList<Movie>) getIntent().getSerializableExtra("SEARCH");
-        String[] moviesTitles = new String[20];
-        for (int i = 0; i < movies.size(); i++) {
-            moviesTitles[i] = movies.get(i).toString();
+        for(Movie movie : movies) {
+            Movies.addItem(movie);
         }
-
         // get list view from acitivity content
-        listView = (ListView) findViewById(R.id.list);
-
+        View recyclerView = findViewById(R.id.list);
         //instantie and set adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, moviesTitles);
-        listView.setAdapter(adapter);
+        setupRecyclerView((RecyclerView) recyclerView);
     }
 
     @Override
@@ -78,5 +82,70 @@ public class SearchResultsActivity extends ActionBarActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(new MovieViewAdapter(Movies.ITEMS));
+    }
+
+    public class MovieViewAdapter
+            extends RecyclerView.Adapter<MovieViewAdapter.ViewHolder> {
+
+        private final List<Movie> movieValues;
+
+        public MovieViewAdapter(List<Movie> items) {movieValues = items;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.movie_detail, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            holder.movieItem = movieValues.get(position);
+            holder.movieIdView.setText(movieValues.get(position).getMovie());
+            holder.movieContentView.setText(movieValues.get(position).toString());
+
+            holder.movieView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, MovieDetailActivity.class);
+                    intent.putExtra("Movie", holder.movieItem);
+                    context.startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return movieValues.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final View movieView;
+            public final TextView movieIdView;
+            public final TextView movieContentView;
+            public Movie movieItem;
+
+            public ViewHolder(View view) {
+                super(view);
+                movieView = view;
+                movieIdView = (TextView) view.findViewById(R.id.detailTextViewTitle);
+                movieContentView = (TextView) view.findViewById(R.id.detailTextViewContent);
+            }
+
+            @Override
+            public String toString() {
+                return super.toString() + " '" + movieContentView.getText() + "'";
+            }
+        }
     }
 }

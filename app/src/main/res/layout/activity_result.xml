@@ -9,10 +9,11 @@
     tools:context=".SearchActivity"
     android:background="#ffffff">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/list"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
