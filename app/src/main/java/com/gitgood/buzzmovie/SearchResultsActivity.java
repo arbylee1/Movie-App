@@ -118,7 +118,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, MovieDetailActivity.class);
-                    intent.putExtra("Movie", holder.movieItem);
+                    intent.putExtra("Movie", holder.movieItem.getRottenTomatoID());
                     context.startActivity(intent);
                 }
             });

@@ -34,17 +34,17 @@ public class Movie implements Serializable {
     public float getNumRatings() {return numRatings;}
 
     public void addRating(float stars) {
+        averageRating *= numRatings;
+        averageRating += stars;
         numRatings++;
-        float coefficient = (numRatings - 1.0f)/numRatings;
-        averageRating *= coefficient;
-        averageRating += (1.0d - coefficient)*stars;
+        averageRating /= numRatings;
     }
 
     public void removeRating(float stars) {
+        averageRating *= numRatings;
+        averageRating -= stars;
         numRatings--;
-        float coefficient = (numRatings + 1.0f)/numRatings;
-        averageRating *= coefficient;
-        averageRating += (1.0d - coefficient)*stars;
+        averageRating /= numRatings;
     }
 
     public String getMovie() {

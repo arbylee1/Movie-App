@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieData = getSharedPreferences(
                 getResources().getString(R.string.MovieData), Context.MODE_PRIVATE);
         currentUser = CurrentUser.getInstance();
-        movie = (Movie) getIntent().getExtras().get("Movie");
+        movie = Movies.ITEM_MAP.get(getIntent().getExtras().get("Movie"));
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         previousUserRating = userInfo.getFloat(movie.getRottenTomatoID() +
                 currentUser.getUsername() + "rating", 0);
@@ -58,8 +59,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
         SharedPreferences.Editor userInfoEditor = userInfo.edit();
         SharedPreferences.Editor movieDataEditor = movieData.edit();
-        userInfoEditor.putFloat(movie.getRottenTomatoID() +
-                currentUser.getUsername() + "rating"
+        userInfoEditor.putFloat(movie.getRottenTomatoID() + currentUser.getUsername() + "rating"
                 , newUserRating);
         movieDataEditor.putFloat(movie.getRottenTomatoID() + "averageRating"
                 , movie.getAverageRating());
