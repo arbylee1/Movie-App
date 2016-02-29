@@ -130,9 +130,10 @@ public class SearchActivity extends AppCompatActivity {
                                 String year = jsonObject.optString("year");
                                 String rating = jsonObject.optString("mpaa_rating");
                                 String synopsis = jsonObject.optString("synopsis");
-                                int[] ratings = new int[5];
-                                float userRating = sharedPreferences.getFloat("AverageUserRating", 0.0f);
-                                Movie s = new Movie(title, id, year, rating, synopsis, userRating, ratings);
+                                float numRatings = sharedPreferences.getFloat(id + "numRatings", 0.0f);
+                                float averageRating = sharedPreferences.getFloat(id + "averageRating", 0.0f);
+
+                                Movie s = new Movie(title, id, year, rating, synopsis, numRatings, averageRating);
                                 //save the object for later
                                 movies.add(s);
 

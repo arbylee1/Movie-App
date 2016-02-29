@@ -39,6 +39,9 @@
             android:name=".ProfActivity"
             android:label="@string/title_activity_prof"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MovieDetailActivity"
+            ></activity>
 
         <activity
             android:name=".SearchActivity"

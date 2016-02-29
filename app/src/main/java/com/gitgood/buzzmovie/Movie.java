@@ -13,30 +13,38 @@ public class Movie implements Serializable {
     String year;
     String rating;
     String synopsis;
-    float averageRating = 0;
-    int userRatings[] = new int[5];
+    float numRatings = 0;
+    float averageRating = 0.0f;
 
-    public Movie(String movie, String Id, String year, String rating, String synopsis,
-                 float averageRating, int[] userRatings) {
+    public Movie(String movie, String Id, String year, String rating, String synopsis, float numRatings
+                 ,float averageRating) {
         this.title = movie;
         this.rottenTomatoID = Id;
         this.year = year;
         this.rating = rating;
         this.synopsis = synopsis;
+        this.numRatings = numRatings;
         this.averageRating = averageRating;
-        this.userRatings = userRatings;
-
     }
 
-    public void addRating(int stars) {
-        userRatings[stars - 1]++;
-        float newAverageRating = 0;
-        int numRatings = 0;
-        for(int i = 0; i < 5; i++) {
-            numRatings += userRatings[i];
-            newAverageRating += (i + 1) * (userRatings[i]);
-        }
-        averageRating = newAverageRating / numRatings;
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public float getNumRatings() {return numRatings;}
+
+    public void addRating(float stars) {
+        numRatings++;
+        float coefficient = (numRatings - 1.0f)/numRatings;
+        averageRating *= coefficient;
+        averageRating += (1.0d - coefficient)*stars;
+    }
+
+    public void removeRating(float stars) {
+        numRatings--;
+        float coefficient = (numRatings + 1.0f)/numRatings;
+        averageRating *= coefficient;
+        averageRating += (1.0d - coefficient)*stars;
     }
 
     public String getMovie() {
@@ -57,7 +65,9 @@ public class Movie implements Serializable {
         return rating;
     }
 
+
     public String toString() {
         return "Name: " + title + " (" + year + "), Rating: " + rating;
     }
+
 }
