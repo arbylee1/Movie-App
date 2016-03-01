@@ -42,4 +42,24 @@
         android:id="@+id/buttonDvd"
         android:layout_alignBottom="@+id/buttonRel"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:id="@+id/userProfileButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:enabled="true"
+        android:clickable="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/LogOut"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:enabled="true"
+        android:clickable="true" />
 </RelativeLayout>

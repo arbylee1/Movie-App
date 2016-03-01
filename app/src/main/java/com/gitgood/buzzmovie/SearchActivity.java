@@ -58,7 +58,32 @@ public class SearchActivity extends AppCompatActivity {
 //                (SearchView) menu.findItem(R.id.menu_search).getActionView();
 //        searchView.setSearchableInfo(
 //                searchManager.getSearchableInfo(getComponentName()));
-
+        // profile button
+        Button userProfileButton = (Button) findViewById(R.id.userProfileButton);
+        // take User to Profile Form Screen
+        userProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ProfActivity.class);
+                startActivity(i);
+            }
+        });
+        // logout button
+        Button logOutButton = (Button) findViewById(R.id.LogOut);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get and then clear Current User
+                SharedPreferences sharedpreferences = getSharedPreferences(
+                        getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.apply();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
         // match search button
         Button searchButton = (Button) findViewById(R.id.button);
         searchButton.setOnClickListener(new View.OnClickListener() {
