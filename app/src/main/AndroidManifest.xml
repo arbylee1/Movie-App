@@ -10,7 +10,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/buzz_movie_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -37,7 +37,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfActivity"
-            android:label="@string/title_activity_prof"
+            android:label="ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".MovieDetailActivity"
