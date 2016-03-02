@@ -48,7 +48,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void updateText() {
         float numRatings = movie.getNumRatings();
         String average = null;
-        if(numRatings == 0) {
+        if(numRatings != 0) {
             average = "Average Rating: " + twoPrecision.format(movie.getAverageRating()) + " (out of :"
             + numRatings + " votes)";
         } else {
