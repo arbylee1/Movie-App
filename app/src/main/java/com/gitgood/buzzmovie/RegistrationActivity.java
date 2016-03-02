@@ -13,6 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class RegistrationActivity extends AppCompatActivity {
     /**
      * Keep track of the registration task to ensure we can cancel it if requested.
@@ -24,6 +35,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText mUsernameView;
     private EditText mPasswordView;
     private SharedPreferences sharedpreferences;
+    private RequestQueue queue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 attemptRegistration();
             }
         });
+        queue = Volley.newRequestQueue(this);
     }
 
     private void attemptRegistration() {
@@ -56,6 +70,11 @@ public class RegistrationActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
+
+//        StringBuilder password = new StringBuilder(mPasswordView.getText().toString());
+//        while(password.length() < 64) {
+//
+//        }
 
         boolean cancel = false;
         View focusView = null;
