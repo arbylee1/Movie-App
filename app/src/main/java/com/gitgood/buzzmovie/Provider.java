@@ -1,8 +1,8 @@
 package com.gitgood.buzzmovie;
 
 import android.content.Context;
-import android.location.GpsStatus;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,32 +18,33 @@ import org.json.JSONObject;
 /**
  * @author Albert Li
  */
+
+
 public class Provider{
-    private String ret;
     private RequestQueue queue;
-    public Provider(Context context) {
+
+    public Provider(Context context) throws Exception {
         queue = Volley.newRequestQueue(context);
     }
-    public String getRandomString() {
-        try {
-            JsonObjectRequest jsObjRequest = new RandomObjectRequest(new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject resp) {
-                    try {
-                        ret = "";
-                        JSONArray array = resp.getJSONObject("result").getJSONObject("random").getJSONArray("data");
-                        ret += array.getString(0) + array.getString(1);
-                    } catch (JSONException f) {
-                    }
+
+    public void getRandomString(final Callback callback) throws JSONException {
+        queue.add(new RandomObjectRequest(new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    JSONArray array = jsonObject.getJSONObject("result").getJSONObject("random")
+                            .getJSONArray("data");
+                    String ret = array.getString(0) + array.getString(1) + array.getString(2);
+                    callback.onSuccess(ret);
+                } catch (JSONException e) {
+                    callback.onFailure(null);
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            queue.add(jsObjRequest);
-        } catch (JSONException e) {
-        }
-        return ret;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onFailure(null);
+            }
+        }));
     }
 }

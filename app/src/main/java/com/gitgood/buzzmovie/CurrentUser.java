@@ -5,8 +5,9 @@ package com.gitgood.buzzmovie;
  */
 public class CurrentUser {
     private static CurrentUser currentUser = new CurrentUser();
-    private String username;
-    private String passwordHash;
+    private static String username;
+    private static String passwordHash;
+    private static String salt;
     private CurrentUser() {
     }
     public static CurrentUser getInstance() {

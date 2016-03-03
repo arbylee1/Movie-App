@@ -1,4 +1,6 @@
 package com.gitgood.buzzmovie;
+import android.content.res.Resources;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -10,19 +12,23 @@ import org.json.JSONObject;
 /**
  * @author Albert Li
  */
-public class RandomObjectRequest extends JsonObjectRequest {
-    String ret = null;
+public class RandomObjectRequest extends JsonObjectRequest{
     public static final int METHOD = Request.Method.POST;
     public static final String URL = "https://api.random.org/json-rpc/1/invoke";
-    public static final JSONObject REQUEST = new JSONObject();
-//
-
+    private static final String JString ="{\n" +
+            " \"jsonrpc\": \"2.0\",\n" +
+            " \"method\": \"generateStrings\",\n" +
+            " \"params\": {\n" +
+            "  \"apiKey\": \"6977995d-861d-4ca6-af82-25c8ff57b1f5\",\n" +
+            "  \"n\": 3,\n" +
+            "  \"length\": 20,\n" +
+            "  \"characters\": \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890\",\n" +
+            "  \"replacement\": true\n" +
+            " },\n" +
+            " \"id\": 1\n" +
+            "}";
     public RandomObjectRequest(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener)
             throws JSONException {
-        super(METHOD, URL, REQUEST, listener, errorListener);
-        REQUEST.put("jsonrpc", "2.0");
-        REQUEST.put("method", "generateStrings");
-        REQUEST.put("params", new Object[]{"6977995d-861d-4ca6-af82-25c8ff57b1f5", 2, 20, ""});
-        REQUEST.put("id", 0);
+        super(METHOD, URL, new JSONObject(JString), listener, errorListener);
     }
 }
