@@ -91,7 +91,7 @@ public class RegistrationActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (sharedpreferences.contains(username)) {
+        if (sharedpreferences.contains(username + "hash")) {
             mUsernameView.setError(getString(R.string.error_duplicate_email));
             focusView = mUsernameView;
             cancel = true;
@@ -126,11 +126,8 @@ public class RegistrationActivity extends AppCompatActivity {
         } else {
             try {
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                Log.d("rand", password);
                 password += result;
-                Log.d("rand", password);
                 password = new String(digest.digest(password.getBytes()));
-                Log.d("rand", password);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(username + "hash", password);
                 editor.putString(username + "salt", result);
