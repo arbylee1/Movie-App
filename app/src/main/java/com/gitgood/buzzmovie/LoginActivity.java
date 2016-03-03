@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * A login screen that offers login via username/password.
  */
@@ -102,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mUsername;
-        private final String mPassword;
+        private String mPassword;
 
         UserLoginTask(String username, String password) {
             mUsername = username;
@@ -113,8 +116,18 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             SharedPreferences sharedpreferences = getSharedPreferences(
                     getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
-            String pass = sharedpreferences.getString(mUsername,null);
-            return (pass != null) && mPassword.equals(pass);
+            String hash = sharedpreferences.getString(mUsername + "hash",null);
+            String salt = sharedpreferences.getString(mUsername + "salt",null);
+            if(hash != null && salt != null) {
+                try {
+                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                    mPassword = new String(digest.digest((mPassword + salt).getBytes()));
+                    return hash.equals(mPassword);
+                } catch (NoSuchAlgorithmException e) {
+                    return false;
+                }
+            }
+            return false;
         }
 
         @Override
@@ -127,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                         getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("username", mUsername);
-                editor.putString("password", mPassword);
+                editor.putString("passwordHash", mPassword);
                 CurrentUser currentUser = CurrentUser.getInstance();
                 currentUser.setUsername(mUsername);
                 currentUser.setPasswordHash(mPassword);

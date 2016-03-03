@@ -23,7 +23,7 @@ import org.json.JSONObject;
 public class Provider{
     private RequestQueue queue;
 
-    public Provider(Context context) throws Exception {
+    public Provider(Context context) {
         queue = Volley.newRequestQueue(context);
     }
 

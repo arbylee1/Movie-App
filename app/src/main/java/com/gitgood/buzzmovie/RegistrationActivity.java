@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,18 +26,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.MessageDigestSpi;
+import java.security.NoSuchAlgorithmException;
+
 public class RegistrationActivity extends AppCompatActivity {
     /**
      * Keep track of the registration task to ensure we can cancel it if requested.
      */
-
-    private UserRegistrationTask mAuthTask = null;
-
     // UI references.
     private EditText mUsernameView;
     private EditText mPasswordView;
     private SharedPreferences sharedpreferences;
-    private RequestQueue queue;
+    private String username;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 attemptRegistration();
             }
         });
-        queue = Volley.newRequestQueue(this);
     }
 
     private void attemptRegistration() {
@@ -68,13 +71,8 @@ public class RegistrationActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-//        StringBuilder password = new StringBuilder(mPasswordView.getText().toString());
-//        while(password.length() < 64) {
-//
-//        }
+        username = mUsernameView.getText().toString();
+        password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -93,53 +91,55 @@ public class RegistrationActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        if (sharedpreferences.contains(username)) {
+            mUsernameView.setError(getString(R.string.error_duplicate_email));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
-            mAuthTask = new UserRegistrationTask(username, password);
-            mAuthTask.execute((Void) null);
-        }
-    }
+            Provider provider = new Provider(getApplicationContext());
+            try {
+                provider.getRandomString(new Callback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        completeRegistration(result);
+                    }
 
-    public class UserRegistrationTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mUsername;
-        private final String mPassword;
-
-        UserRegistrationTask(String username, String password) {
-            mUsername = username;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            return !sharedpreferences.contains(mUsername);
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            if (success) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(mUsername, mPassword);
-                editor.apply();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                Toast toast = Toast.makeText(getApplicationContext(), "Account creation successful", Toast.LENGTH_SHORT);
-                toast.show();
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-            } else {
-                mUsernameView.setError(getString(R.string.error_duplicate_email));
-                mUsernameView.requestFocus();
+                    @Override
+                    public void onFailure(String result) {
+                        completeRegistration(result);
+                    }
+                });
+            } catch (JSONException e) {
             }
         }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-        }
     }
-
+    private void completeRegistration(String result) {
+        Toast message = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        if (result == null) {
+            message.setText("Registration failed. Check Internet Connection");
+        } else {
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                Log.d("rand", password);
+                password += result;
+                Log.d("rand", password);
+                password = new String(digest.digest(password.getBytes()));
+                Log.d("rand", password);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(username + "hash", password);
+                editor.putString(username + "salt", result);
+                editor.apply();
+                message.setText("Registration Successful.");
+                finish();
+            } catch (NoSuchAlgorithmException e) {
+            }
+        }
+        message.show();
+    }
 }
