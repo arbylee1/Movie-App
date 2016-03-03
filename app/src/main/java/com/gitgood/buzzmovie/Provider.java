@@ -27,7 +27,7 @@ public class Provider{
         queue = Volley.newRequestQueue(context);
     }
 
-    public void getRandomString(final Callback callback) throws JSONException {
+    public void getRandomString(final Callback<String> callback) throws JSONException {
         queue.add(new RandomObjectRequest(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
