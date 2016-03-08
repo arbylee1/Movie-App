@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.io.Serializable;
+import java.util.Map;
+
 /**
  * Created by Chudy on 2/21/16.
  */
@@ -33,11 +35,13 @@ public class Movie implements Serializable {
 
     public float getNumRatings() {return numRatings;}
 
-    public void addRating(float stars) {
+    public void addRating(float stars, String major, String User) {
         averageRating *= numRatings;
         averageRating += stars;
         numRatings++;
         averageRating /= numRatings;
+
+        Rating rating = new Rating(rottenTomatoID, User,(numRatings - 1), major ,stars);
     }
 
     public void removeRating(float stars) {
@@ -65,9 +69,13 @@ public class Movie implements Serializable {
         return rating;
     }
 
-
     public String toString() {
         return "Name: " + title + " (" + year + "), Rating: " + rating;
     }
+
+//    public Map<String, Rating> GetRating(SharedPreferences movieData){
+//        this.movieData = movieData;
+//        return new Map<String, Rating>;
+//    }
 
 }

@@ -104,13 +104,11 @@ public class RegistrationActivity extends AppCompatActivity {
         } else {
             Provider provider = new Provider(getApplicationContext());
             try {
-                provider.getRandomString(new Callback() {
-                    @Override
+                provider.getRandomString(new Callback<String>() {
                     public void onSuccess(String result) {
                         completeRegistration(result);
                     }
 
-                    @Override
                     public void onFailure(String result) {
                         completeRegistration(result);
                     }

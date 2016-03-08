@@ -1,5 +1,7 @@
 package com.gitgood.buzzmovie;
 
+import android.content.SharedPreferences;
+
 /**
  * Created by Orange Blossom on 2/28/2016.
  */
@@ -26,5 +28,4 @@ public class CurrentUser {
     public String getPasswordHash() {
         return passwordHash;
     }
-
 }

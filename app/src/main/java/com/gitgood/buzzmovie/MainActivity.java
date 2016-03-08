@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v("DNAN","WE 2IN");
         setContentView(R.layout.activity_main);
         final Button loginButton = (Button) findViewById(R.id.LoginButton);
         final Button registrationButton = (Button) findViewById(R.id.RegistrationButton);

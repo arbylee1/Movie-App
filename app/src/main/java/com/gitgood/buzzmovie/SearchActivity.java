@@ -29,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
     public final static int ROTTEN_TOMATO_GET_MATCH = 1;
@@ -81,6 +83,17 @@ public class SearchActivity extends AppCompatActivity {
                 editor.apply();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
+
+        // Button to go to recomendation Screen
+        Button getRecomendationButton = (Button) findViewById(R.id.button2);
+        getRecomendationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), GetRecommendation.class);
+                // send all movies into next activity
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }
         });
@@ -142,8 +155,38 @@ public class SearchActivity extends AppCompatActivity {
                         }
                         assert obj1 != null;
                         //From that object, we extract the array of actual data labeled result
-                        Movies.clear();
+//                        Movies.clear();
                         SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
+//                        Map<String,?> map = sharedPreferences.getAll();
+//                        int counter = 0;
+//                        Log.v("||DAN||", "we in");
+//                        for (String key : map.keySet()) {
+//                            Log.v("||DAN||", key + " => " + counter + " => " + map.get(key));
+//                            counter++;
+//                        }
+//
+//                        SharedPreferences sharedPreferences2 = getSharedPreferences("RatingData", MODE_PRIVATE);
+//                        Map<String,?> map1 = sharedPreferences2.getAll();
+//                        counter = 0;
+//
+//                        Log.v("||DAN||", "start 2");
+//                        for (String key : map1.keySet()) {
+//                            Log.v("||DAN||", key + " => " + counter + " => " + map1.get(key));
+//                            counter++;
+//                        }
+                        Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
+                        Ratings.getInstance().reloadMapFromMemory();
+
+                        Map<String,Rating> map2 = Ratings.getInstance().getAllRatings();;
+                        int counter = 0;
+                        Log.v("||DAN||","start 3");
+                        if (map2.keySet() != null) {
+                            for (String key : map2.keySet()) {
+                                Log.v("||DAN||", key + " => " + counter + " => " + map2.get(key));
+                                counter++;
+                            }
+                        }
+
                         ArrayList<String> movies = new ArrayList<>();
                         for(int i=0; i < array.length(); i++) {
                             try {

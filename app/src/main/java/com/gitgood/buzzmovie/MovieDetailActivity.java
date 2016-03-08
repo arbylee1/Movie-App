@@ -17,6 +17,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     final DecimalFormat twoPrecision = new DecimalFormat(".00");
     SharedPreferences userInfo;
     SharedPreferences movieData;
+    SharedPreferences ratingData;
     CurrentUser currentUser;
     float previousUserRating;
     RatingBar ratingBar;
@@ -25,6 +26,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+        ratingData = getSharedPreferences("RatingData", Context.MODE_PRIVATE);
         userInfo = getSharedPreferences(
                 getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
         movieData = getSharedPreferences(
@@ -58,26 +60,27 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
     private void updateRating() {
         float newUserRating = ratingBar.getRating();
+        Ratings.getInstance().setSharedPreference(ratingData);
         if (previousUserRating == 0) {
             if(newUserRating != 0) {
-                movie.addRating(newUserRating);
+                movie.addRating(newUserRating, userInfo.getString(currentUser.getUsername() + "_major", "!"), currentUser.getUsername());
             }
         } else {
             if (newUserRating != 0) {
-                movie.addRating(newUserRating);
+                movie.addRating(newUserRating, userInfo.getString(currentUser.getUsername() + "_major", "!"), currentUser.getUsername());
             }
             movie.removeRating(previousUserRating);
         }
-        SharedPreferences.Editor userInfoEditor = userInfo.edit();
-        SharedPreferences.Editor movieDataEditor = movieData.edit();
-        userInfoEditor.putFloat(movie.getRottenTomatoID() + currentUser.getUsername() + "rating"
-                , newUserRating);
-        movieDataEditor.putFloat(movie.getRottenTomatoID() + "averageRating"
-                , movie.getAverageRating());
-        movieDataEditor.putFloat(movie.getRottenTomatoID() + "numRatings"
-                , movie.getNumRatings());
-        userInfoEditor.apply();
-        movieDataEditor.apply();
+//        SharedPreferences.Editor userInfoEditor = userInfo.edit();
+//        SharedPreferences.Editor movieDataEditor = movieData.edit();
+//        userInfoEditor.putFloat(movie.getRottenTomatoID() + currentUser.getUsername() + "rating"
+//                , newUserRating);
+//        movieDataEditor.putFloat(movie.getRottenTomatoID() + "averageRating"
+//                , movie.getAverageRating());
+//        movieDataEditor.putFloat(movie.getRottenTomatoID() + "numRatings"
+//                , movie.getNumRatings());
+//        userInfoEditor.apply();
+//        movieDataEditor.apply();
         previousUserRating = newUserRating;
         updateText();
     }

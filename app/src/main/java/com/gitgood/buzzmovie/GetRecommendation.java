@@ -1,0 +1,71 @@
+package com.gitgood.buzzmovie;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+public class GetRecommendation extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_recommendation);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
+        Ratings.getInstance().reloadMapFromMemory();
+
+        Set<String> majorSet = Ratings.getInstance().getMajorSet();
+        String majorList = "  ";
+        if (majorSet.size() > 0) {
+            for(String major : majorSet) {
+                if (!major.equals("!")) {
+                    majorList += major + " ";
+                }
+            }
+            ((TextView) findViewById(R.id.MajorList)).setText(majorList);
+        }
+
+        Button getRecButton = (Button) findViewById(R.id.button3);
+        getRecButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText searchEditText = (EditText) findViewById(R.id.editText);
+                String findme = searchEditText.getText().toString();
+                TextView response = (TextView) findViewById(R.id.resultsView);
+                String result = " ";
+                if (Ratings.getInstance().getMajorSet().contains(findme)) {
+                    ArrayList<Rating> ratingsInorder = Ratings.getInstance().getRatingsByMajorInOrder(findme);
+                    for (int i = 0; (i < ratingsInorder.size() && i < 3); i++) {
+                        result += ratingsInorder.get(i).toString();
+                    }
+                    response.setText(result);
+                } else {
+                    response.setText("No Ratings have been added by that major");
+                }
+            }
+        });
+
+    }
+
+}
