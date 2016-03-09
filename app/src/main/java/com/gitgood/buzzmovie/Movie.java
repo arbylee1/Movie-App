@@ -41,7 +41,7 @@ public class Movie implements Serializable {
         numRatings++;
         averageRating /= numRatings;
 
-        Rating rating = new Rating(rottenTomatoID, User,(numRatings - 1), major ,stars);
+        Rating rating = new Rating(rottenTomatoID, User,(numRatings - 1), major ,stars, title);
     }
 
     public void removeRating(float stars) {

@@ -57,7 +57,7 @@ public class GetRecommendation extends AppCompatActivity {
                 if (Ratings.getInstance().getMajorSet().contains(findme)) {
                     ArrayList<Rating> ratingsInorder = Ratings.getInstance().getRatingsByMajorInOrder(findme);
                     for (int i = 0; (i < ratingsInorder.size() && i < 3); i++) {
-                        result += ratingsInorder.get(i).toString();
+                        result += (ratingsInorder.get(i).getTitle() + "   " + ratingsInorder.get(i).getStars() + "/5.0    ");
                     }
                     response.setText(result);
                 } else {

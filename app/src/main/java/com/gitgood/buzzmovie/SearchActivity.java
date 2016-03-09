@@ -150,6 +150,7 @@ public class SearchActivity extends AppCompatActivity {
                         JSONArray array = null;
                         try {
                             array = resp.getJSONArray("movies");
+                            Movies.clear();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

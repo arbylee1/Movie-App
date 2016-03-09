@@ -25,7 +25,7 @@ public class Ratings {
 
     public void reloadMapFromMemory() {
         if (ratingData.getAll().size() != 0) {
-            Log.v("||DAN||", "17");
+            Log.v("||DAN||", String.valueOf(ratingData.getAll().size()));
             if (ratingData.getAll() != null && !ratingData.getAll().isEmpty()) {
                 Map<String, ?> map1 = ratingData.getAll();
                 int counter = 0;
@@ -103,17 +103,25 @@ public class Ratings {
         HashMap<String, Rating> byMajor = getAllRatingsByMajor(Whatmajor);
         ArrayList<Rating> inOrder = new ArrayList<>();
         Rating highest = new Rating();
+        Rating second = new Rating();
+        Log.v("D","WAS FIRED");
 
         for (int i = 0; i < byMajor.size(); i++) {
             String removeString = " ";
             for (String string : byMajor.keySet()) {
                 if (highest.getStars() < ratingsMap.get(string).getStars()) {
+                    if (highest != null) {
+                        second = highest;
+                    }
                     highest = ratingsMap.get(string);
                     removeString = string;
                 }
             }
             if (!removeString.equals(" ")) {
                 inOrder.add(highest);
+                if (second.getTitle() != null) {
+                    inOrder.add(second);
+                }
                 byMajor.remove(removeString);
             }
         }
