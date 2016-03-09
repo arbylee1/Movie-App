@@ -63,6 +63,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         Ratings.getInstance().setSharedPreference(ratingData);
         if (previousUserRating == 0) {
             if(newUserRating != 0) {
+                // create a rating based off number of stars, User, and the movie itself.
                 movie.addRating(newUserRating, userInfo.getString(currentUser.getUsername() + "_major", "!"), currentUser.getUsername());
             }
         } else {
@@ -71,6 +72,8 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
             movie.removeRating(previousUserRating);
         }
+
+        // DEPRECATED: this was to system before we changed it.
 //        SharedPreferences.Editor userInfoEditor = userInfo.edit();
 //        SharedPreferences.Editor movieDataEditor = movieData.edit();
 //        userInfoEditor.putFloat(movie.getRottenTomatoID() + currentUser.getUsername() + "rating"

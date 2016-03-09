@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 /**
  * Created by Orange Blossom on 2/28/2016.
+ * This static object keeps track of the Current users and can be called anywhere in the appilcation
+ * this makes user tracking and admin verification easy. Only gets reset at login screen
  */
 public class CurrentUser {
     private static CurrentUser currentUser = new CurrentUser();
@@ -12,6 +14,7 @@ public class CurrentUser {
     private static String salt;
     private CurrentUser() {
     }
+
     public static CurrentUser getInstance() {
         return currentUser;
     }

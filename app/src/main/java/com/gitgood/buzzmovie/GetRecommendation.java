@@ -14,6 +14,8 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
+// Controller for Recomendation Activity.
 public class GetRecommendation extends AppCompatActivity {
 
     @Override
@@ -32,13 +34,16 @@ public class GetRecommendation extends AppCompatActivity {
             }
         });
 
+        // reload all Ratings data to make sure its updated and accurate
         Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
         Ratings.getInstance().reloadMapFromMemory();
 
+        // get all Majors represented and display to user. This lets the User know what he can sort by
         Set<String> majorSet = Ratings.getInstance().getMajorSet();
         String majorList = "  ";
         if (majorSet.size() > 0) {
             for(String major : majorSet) {
+                // Ratings without majors are filled with "!", we will be ignoring those
                 if (!major.equals("!")) {
                     majorList += major + " ";
                 }
@@ -47,6 +52,8 @@ public class GetRecommendation extends AppCompatActivity {
         }
 
         Button getRecButton = (Button) findViewById(R.id.button3);
+        // once the criteria is set we get our ratings collection and query it using its methods and
+        // the criteria given the user
         getRecButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,11 +63,13 @@ public class GetRecommendation extends AppCompatActivity {
                 String result = " ";
                 if (Ratings.getInstance().getMajorSet().contains(findme)) {
                     ArrayList<Rating> ratingsInorder = Ratings.getInstance().getRatingsByMajorInOrder(findme);
+                    // make it into an easily displayed string
                     for (int i = 0; (i < ratingsInorder.size() && i < 3); i++) {
                         result += (ratingsInorder.get(i).getTitle() + "   " + ratingsInorder.get(i).getStars() + "/5.0    ");
                     }
                     response.setText(result);
                 } else {
+                    // if nothing is found
                     response.setText("No Ratings have been added by that major");
                 }
             }

@@ -10,10 +10,12 @@ import java.util.Set;
 import java.util.HashMap;
 /**
  * Created by Chudy on 3/7/16.
+ * monostatic global object that handles all ratings within the system.
+ * This Object will do all backend tracking, maintaining, adding, removing, and sorting of ratings in the system
  */
 public class Ratings {
-    private SharedPreferences ratingData;
-    private HashMap<String,Rating> ratingsMap = new HashMap<String,Rating>();
+    private SharedPreferences ratingData;  // where we store all rating data
+    private HashMap<String,Rating> ratingsMap = new HashMap<String,Rating>(); // Maps object to easily read all ratings
     private static Ratings ratings = new Ratings();
 
     private Ratings(){
@@ -23,17 +25,16 @@ public class Ratings {
         this.ratingData = ratingData;
     }
 
+    // goes into the sharedpreferences and reloads all back-edn rating data into the front end map object
     public void reloadMapFromMemory() {
         if (ratingData.getAll().size() != 0) {
-            Log.v("||DAN||", String.valueOf(ratingData.getAll().size()));
             if (ratingData.getAll() != null && !ratingData.getAll().isEmpty()) {
                 Map<String, ?> map1 = ratingData.getAll();
                 int counter = 0;
-                ratingsMap.clear();
+                ratingsMap.clear(); // clear map
 
-                Log.v("||DAN||", "start in reloadMpa from data");
+                // reload entire map from shared preferences
                 for (String key : map1.keySet()) {
-                    Log.v("||DAN||", key + " => " + counter + " => " + map1.get(key));
                     ratingsMap.put(key, new Rating((String) map1.get(key)));
                     counter++;
                 }
@@ -41,16 +42,20 @@ public class Ratings {
         }
     }
 
+    // loads the var into any activity, with this all its methods can be called
     public static Ratings getInstance() {
         return ratings;
     }
 
+    // takes in the Ratings object and stores it into Shared preferences aswell as our collection
     public void addRatings(Rating newRating) {
         SharedPreferences.Editor ratingsEditor = ratingData.edit();
         ratingsEditor.putString((newRating.getKey()),(newRating.toString()));
         ratingsMap.put(newRating.getKey(), (newRating));
         ratingsEditor.apply();
     }
+
+    // runs through collection and finds all majors representing in the ratings data
     public Set<String> getMajorSet() {
         Set<String> majorSet = new HashSet<String>();
         for (String string : ratingsMap.keySet()) {
@@ -62,10 +67,12 @@ public class Ratings {
         return majorSet;
     }
 
+    // give collection of all ratinging in system
     public HashMap<String, Rating> getAllRatings(){
         return ratingsMap;
     }
 
+    // runs through collection and finds ratings assosicated with a  major
     public HashMap<String, Rating> getAllRatingsByMajor(String whatMajor) {
         HashMap<String, Rating> byMajor = new HashMap<String, Rating>();
         for (String string : ratingsMap.keySet()) {
@@ -76,7 +83,7 @@ public class Ratings {
         }
         return byMajor;
     }
-
+    // runs through collection and finds ratings assosicated with a movie (rotten tomato Id)
     public HashMap<String, Rating> getAllRatingsbyMovie(String whatID) {
         HashMap<String, Rating> byID = new HashMap<String, Rating>();
         for (String string : ratingsMap.keySet()) {
@@ -88,6 +95,7 @@ public class Ratings {
         return byID;
     }
 
+    // runs through collection and finds ratings assosicated with a User (Username)
     public HashMap<String, Rating> getAllRatingsbyUser(String whatUsername) {
         HashMap<String, Rating> byUser = new HashMap<String, Rating>();
         for (String string : ratingsMap.keySet()) {
@@ -99,6 +107,7 @@ public class Ratings {
         return byUser;
     }
 
+    // runs through collection and sorts top 2 ratings by major and how highly they were rated
     public ArrayList<Rating> getRatingsByMajorInOrder(String Whatmajor){
         HashMap<String, Rating> byMajor = getAllRatingsByMajor(Whatmajor);
         ArrayList<Rating> inOrder = new ArrayList<>();

@@ -3,6 +3,8 @@ package com.gitgood.buzzmovie;
 /**
  * Created by Chudy on 3/7/16.
  */
+
+// Information holder for ratings
 public class Rating {
     private String RTid;
     private String owner;
@@ -11,6 +13,8 @@ public class Rating {
     private float stars;
     private String movieTitle;
 
+    // instantied from json. We store all Ratings data as Strings in the backend. Can create objects
+    // out of the strings when pulling them out of the backend
     public Rating(String json){
         String[] tokens = json.split(",");
         this.RTid = tokens[0];
@@ -25,6 +29,7 @@ public class Rating {
         }
     }
 
+    // basic constructer
     public Rating(String RTid, String owner, float number, String major, float stars, String movieTitle) {
         this.RTid = RTid;
         this.owner = owner;
@@ -42,6 +47,8 @@ public class Rating {
     public String getKey() {
         return (RTid + "|" + owner);
     }
+
+    // method to turn entire object into a String. This makes it easy to store in the backend
     public String toString(){
         return (RTid + "," + owner + "," + number + "," + major + "," + stars + "," + movieTitle);
     }
