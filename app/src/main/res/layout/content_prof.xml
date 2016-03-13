@@ -36,7 +36,8 @@
         android:ems="10"
         android:id="@+id/eName"
         android:layout_below="@+id/textView6"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
         android:id="@+id/eMajor"
         android:layout_below="@+id/textView7"
         android:layout_alignEnd="@+id/eName"
-        android:layout_alignStart="@+id/eName" />
+        android:layout_alignStart="@+id/eName"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,9 +79,9 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/bbUpdate"
+        android:layout_marginTop="56dp"
         android:layout_below="@+id/eInterest"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -88,5 +90,14 @@
         android:id="@+id/bbCancel"
         android:layout_alignTop="@+id/bbUpdate"
         android:layout_toEndOf="@+id/textView5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="User Type:"
+        android:id="@+id/userType"
+        android:layout_above="@+id/bbCancel"
+        android:layout_alignEnd="@+id/textView8" />
 
 </RelativeLayout>

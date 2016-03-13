@@ -13,6 +13,8 @@ public class User {
     private String password;
     private String major;
     private String interests;
+    private boolean isAdmin;
+    private boolean isBanned;
 
     public User(String email, String name, String userName, String password, String major) {
         this.email = email;
@@ -21,6 +23,8 @@ public class User {
         this.password = password;
         this.major = major;
         this.interests = "";
+        this.isAdmin = false;
+        this.isBanned = false;
     }
 
     public User(String name, String userName, String password) {
@@ -79,5 +83,25 @@ public class User {
 
     public void setInterests(String input) {
         this.interests = input;
+    }
+
+    public boolean getAdminStatus() {
+        return isAdmin;
+    }
+
+    public void createAdmin() {
+        this.isAdmin = true;
+    }
+
+    public void ban() {
+        this.isBanned = true;
+    }
+
+    public void unBan() {
+        this.isBanned = false;
+    }
+
+    public boolean getBanStatus() {
+        return isBanned;
     }
 }

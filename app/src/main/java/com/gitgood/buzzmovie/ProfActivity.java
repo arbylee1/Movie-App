@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -21,6 +22,7 @@ public class ProfActivity extends AppCompatActivity {
     private EditText mName;
     private EditText mmMajor;
     private EditText mInterest;
+    private TextView mUserType;
     private Button bUpdate;
     private Button bCancel;
 
@@ -43,8 +45,9 @@ public class ProfActivity extends AppCompatActivity {
         mName = (EditText) findViewById(R.id.eName);
         mmMajor = (EditText) findViewById(R.id.eMajor);
         mInterest = (EditText) findViewById(R.id.eInterest);
+        mUserType = (TextView) findViewById(R.id.userType);
 
-        // Logic to get Current User and all associated fields aswell as fill current values into
+        // Logic to get Current User and all associated fields as well as fill current values into
         // the view
         SharedPreferences currentUser = getSharedPreferences(
                 getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);

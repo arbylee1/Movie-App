@@ -12,7 +12,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,9 +39,11 @@ public class RegistrationActivity extends AppCompatActivity {
     // UI references.
     private EditText mUsernameView;
     private EditText mPasswordView;
+    private RadioButton adminCreator;
     private SharedPreferences sharedpreferences;
     private String username;
     private String password;
+    private boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
         mPasswordView = (EditText) findViewById(R.id.passwordText);
         Button registrationButton = (Button) findViewById(R.id.RegSubmitButton);
         Button cancelButton = (Button) findViewById(R.id.RegCancelButton);
+        final RadioButton adminCreator = (RadioButton) findViewById(R.id.AdminButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +78,7 @@ public class RegistrationActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         username = mUsernameView.getText().toString();
         password = mPasswordView.getText().toString();
+
 
         boolean cancel = false;
         View focusView = null;
