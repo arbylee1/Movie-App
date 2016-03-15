@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -55,7 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
         mPasswordView = (EditText) findViewById(R.id.passwordText);
         Button registrationButton = (Button) findViewById(R.id.RegSubmitButton);
         Button cancelButton = (Button) findViewById(R.id.RegCancelButton);
-        final RadioButton adminCreator = (RadioButton) findViewById(R.id.AdminButton);
+        adminCreator = (RadioButton) findViewById(R.id.AdminButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +79,7 @@ public class RegistrationActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         username = mUsernameView.getText().toString();
         password = mPasswordView.getText().toString();
-
+        isAdmin = adminCreator.isChecked();
 
         boolean cancel = false;
         View focusView = null;
@@ -135,6 +136,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(username + "hash", password);
                 editor.putString(username + "salt", result);
+                editor.putBoolean(username + "isAdmin", isAdmin);
                 editor.apply();
                 message.setText("Registration Successful.");
                 finish();

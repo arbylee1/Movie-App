@@ -32,5 +32,6 @@
     <string name="top_movies">Top Movies</string>
     <string name="new_movies">New Movies</string>
     <string name="title_activity_get_recommendation">GetRecommendation</string>
+    <string name="title_activity_admin_user_list">AdminUserListActivity</string>
 
 </resources>

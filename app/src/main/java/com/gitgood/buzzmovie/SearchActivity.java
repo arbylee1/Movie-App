@@ -70,6 +70,21 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Log.v("IS AN ME, DANIEL" , CurrentUser.getInstance().getIsAdmin().toString());
+        if (CurrentUser.getInstance().getIsAdmin()) {
+            Button adminButton = (Button) findViewById(R.id.AdminControlButton);
+            adminButton.setVisibility(View.VISIBLE);
+            adminButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(), AdminUserListActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                }
+            });
+        }
+
         // logout button
         Button logOutButton = (Button) findViewById(R.id.LogOut);
         logOutButton.setOnClickListener(new View.OnClickListener() {

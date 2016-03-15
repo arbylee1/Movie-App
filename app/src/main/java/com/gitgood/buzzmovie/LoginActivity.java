@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private EditText mUsernameView;
     private EditText mPasswordView;
+    private Boolean isAdmin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,16 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        SharedPreferences sharedpreferences = getSharedPreferences(
+                getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
+        Boolean isbanned = sharedpreferences.getBoolean(username + "_ban",false);
+
+        if (isbanned) {
+            mUsernameView.setError("USER IS LOCKED BY ADMIN");
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -118,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                     getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
             String hash = sharedpreferences.getString(mUsername + "hash",null);
             String salt = sharedpreferences.getString(mUsername + "salt",null);
+            isAdmin = sharedpreferences.getBoolean(mUsername + "isAdmin", false);
             if(hash != null && salt != null) {
                 try {
                     MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -141,9 +153,11 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("username", mUsername);
                 editor.putString("passwordHash", mPassword);
+                editor.putBoolean("isAdmin",isAdmin);
                 CurrentUser currentUser = CurrentUser.getInstance();
                 currentUser.setUsername(mUsername);
                 currentUser.setPasswordHash(mPassword);
+                currentUser.setUserIsAdmin(isAdmin);
                 editor.apply();
                 goToMain2();
             } else {

@@ -81,4 +81,14 @@
         android:id="@+id/textView10"
         android:layout_above="@+id/searchText"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin Controls"
+        android:id="@+id/AdminControlButton"
+        android:layout_alignBottom="@+id/LogOut"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 </RelativeLayout>

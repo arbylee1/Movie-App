@@ -63,6 +63,10 @@
         <activity
             android:name=".GetRecommendation"
             android:label="@string/title_activity_get_recommendation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminUserListActivity"
+            android:label="@string/title_activity_admin_user_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

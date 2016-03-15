@@ -41,6 +41,19 @@ public class User {
         this.password = password;
     }
 
+    public User(String username, String name, Boolean isBanned, Boolean isAdmin) {
+        this.userName = username;
+        if (name != null) {
+            this.name = name;
+        }
+        if (isBanned != null) {
+            this.isBanned = isBanned;
+        }
+        if (isAdmin != null ) {
+            this.isAdmin = isAdmin;
+        }
+    }
+
     public String getEmail() {
         return email;
     }
@@ -103,5 +116,9 @@ public class User {
 
     public boolean getBanStatus() {
         return isBanned;
+    }
+
+    public String toString() {
+        return (userName + " " + name + " " + isAdmin + " " + isBanned);
     }
 }

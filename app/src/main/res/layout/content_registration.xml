@@ -74,5 +74,6 @@
         android:id="@+id/AdminButton"
         android:clickable="true"
         android:layout_below="@+id/passwordText"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:checked="false" />
 </RelativeLayout>
