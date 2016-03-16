@@ -104,14 +104,15 @@ public class AdminUserListActivity extends AppCompatActivity {
             User user = Users.get(position);
             holder.movieItem = user;
             holder.movieIdView.setText(user.getUserName());
+            holder.movieIdView.setTextSize(16);
 
 
             if (Users.get(position).getBanStatus()) {
                 holder.itemView.setBackgroundColor(Color.RED);
-                holder.movieContentView.setText("BLOCKED");
+                holder.movieContentView.setText("blocked");
             } else {
                 holder.itemView.setBackgroundColor(Color.WHITE);
-                holder.movieContentView.setText("ACTIVE");
+                holder.movieContentView.setText("active");
             }
 
             holder.itemView.setMinimumWidth(1000);
@@ -133,11 +134,11 @@ public class AdminUserListActivity extends AppCompatActivity {
                     if (banned) {
                         holder.itemView.setBackgroundColor(Color.RED);
                         user.ban();
-                        holder.movieContentView.setText("BLOCKED");
+                        holder.movieContentView.setText("blocked");
                     } else {
                         holder.itemView.setBackgroundColor(Color.WHITE);
                         user.unBan();
-                        holder.movieContentView.setText("ACTIVE");
+                        holder.movieContentView.setText("active");
                     }
                 }
             });
