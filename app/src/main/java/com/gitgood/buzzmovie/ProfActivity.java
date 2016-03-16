@@ -59,6 +59,12 @@ public class ProfActivity extends AppCompatActivity {
         mName.setText(userInfo.getString(currentUsername + "_name", "Set Name" ));
         mmMajor.setText(userInfo.getString(currentUsername + "_major", "Set Major"));
         mInterest.setText(userInfo.getString(currentUsername + "_interests", "Set Interests"));
+        if (currentUser.getBoolean("isAdmin", false)) {
+            mUserType.setText("User Type: Admin");
+        } else {
+            mUserType.setText("User Type: Student");
+        }
+
 
         // Set update button and logic. Logic will take all field values and update user fields in
         // the backend

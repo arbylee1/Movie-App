@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.graphics.Color;
 
@@ -103,11 +104,23 @@ public class AdminUserListActivity extends AppCompatActivity {
             User user = Users.get(position);
             holder.movieItem = user;
             holder.movieIdView.setText(user.getUserName());
-            holder.movieContentView.setText(user.getUserName() + " | LOCKED: " + user.getBanStatus());
 
-            if (Users.get(position).getBanStatus() == true) {
+
+            if (Users.get(position).getBanStatus()) {
                 holder.itemView.setBackgroundColor(Color.RED);
+                holder.movieContentView.setText("BLOCKED");
+            } else {
+                holder.itemView.setBackgroundColor(Color.WHITE);
+                holder.movieContentView.setText("ACTIVE");
             }
+
+            holder.itemView.setMinimumWidth(1000);
+            holder.itemView.setMinimumHeight(160);
+            holder.movieIdView.setPaddingRelative(25, 25, 25, 25);
+            holder.movieContentView.setPaddingRelative(25, 75, 25, 0);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, 0, 0, 20);
+            holder.itemView.setLayoutParams(lp);
 
             holder.movieView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,11 +133,11 @@ public class AdminUserListActivity extends AppCompatActivity {
                     if (banned) {
                         holder.itemView.setBackgroundColor(Color.RED);
                         user.ban();
-                        holder.movieContentView.setText(user.getUserName() + " | LOCKED: " + user.getBanStatus());
+                        holder.movieContentView.setText("BLOCKED");
                     } else {
                         holder.itemView.setBackgroundColor(Color.WHITE);
                         user.unBan();
-                        holder.movieContentView.setText(user.getUserName() + " | LOCKED: " + user.getBanStatus());
+                        holder.movieContentView.setText("ACTIVE");
                     }
                 }
             });
