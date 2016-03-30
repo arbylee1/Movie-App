@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,9 +30,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText mUsernameView;
     private EditText mPasswordView;
     private RadioButton adminCreator;
-    private String username;
-    private String password;
-    private boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +60,8 @@ public class RegistrationActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        username = mUsernameView.getText().toString();
-        password = mPasswordView.getText().toString();
-        isAdmin = adminCreator.isChecked();
+        String username = mUsernameView.getText().toString();
+        String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -90,7 +87,7 @@ public class RegistrationActivity extends AppCompatActivity {
         } else {
             ProviderInterface provider = Provider.getInstance(this);
             try {
-                provider.registerUser(username, password, new Callback<String>() {
+                provider.registerUser(username, password, adminCreator.isChecked(), new Callback<String>() {
                     public void onSuccess(String result) {
                         completeRegistration(result);
                     }
@@ -109,8 +106,8 @@ public class RegistrationActivity extends AppCompatActivity {
             message.setText("Registration failed. Check Internet Connection");
             message.show();
         } else if (result.equals("duplicate")) {
-            View focusView = mUsernameView;
             mUsernameView.setError(getString(R.string.error_duplicate_email));
+            mUsernameView.requestFocus();
         } else {
             message.setText("Registration Successful.");
             message.show();

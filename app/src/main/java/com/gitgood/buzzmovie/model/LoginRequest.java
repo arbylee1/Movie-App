@@ -9,10 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by Albert Li on 3/29/16.
+ * @author Albert Li
  */
 public class LoginRequest extends JsonObjectRequest{
-    public static final int METHOD = Request.Method.POST;
+    public static final int METHOD = Request.Method.GET;
     public static final String URL = "https://www.albertli.biz/api/login/";
     public LoginRequest(String username, String password, Response.Listener<JSONObject> listener,
                         Response.ErrorListener errorListener) throws JSONException {

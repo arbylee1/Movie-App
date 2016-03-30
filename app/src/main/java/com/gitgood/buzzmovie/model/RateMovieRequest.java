@@ -11,7 +11,7 @@ import org.json.JSONException;
  */
 public class RateMovieRequest extends StringRequest {
     public static final int METHOD = Request.Method.POST;
-    public static final String URL = "https://www.albertli.biz/api/register";
+    public static final String URL = "https://www.albertli.biz/api/register/";
     public RateMovieRequest(Response.Listener<String> listener, Response.ErrorListener errorListener)
             throws JSONException {
         super(METHOD, URL, listener, errorListener);
