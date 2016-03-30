@@ -7,7 +7,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 
 /**
- * Created by Albert Li on 3/29/16.
+ * @author Albert Li
  */
 public class RateMovieRequest extends StringRequest {
     public static final int METHOD = Request.Method.POST;

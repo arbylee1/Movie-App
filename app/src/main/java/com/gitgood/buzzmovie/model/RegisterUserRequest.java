@@ -5,10 +5,9 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
- * Created by Albert Li on 3/29/16.
+ * @author Albert Li
  */
 public class RegisterUserRequest extends StringRequest {
     public static final int METHOD = Request.Method.POST;
