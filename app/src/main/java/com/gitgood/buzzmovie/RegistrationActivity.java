@@ -1,36 +1,24 @@
 package com.gitgood.buzzmovie;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.NetworkOnMainThreadException;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.gitgood.buzzmovie.model.Callback;
+import com.gitgood.buzzmovie.model.Provider;
+import com.gitgood.buzzmovie.model.ProviderInterface;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.security.MessageDigest;
-import java.security.MessageDigestSpi;
 import java.security.NoSuchAlgorithmException;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -41,7 +29,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText mUsernameView;
     private EditText mPasswordView;
     private RadioButton adminCreator;
-    private SharedPreferences sharedpreferences;
     private String username;
     private String password;
     private boolean isAdmin;
@@ -50,9 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        sharedpreferences = getSharedPreferences(getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
         mUsernameView = (EditText) findViewById(R.id.usernameText);
-        mUsernameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mPasswordView = (EditText) findViewById(R.id.passwordText);
         Button registrationButton = (Button) findViewById(R.id.RegSubmitButton);
         Button cancelButton = (Button) findViewById(R.id.RegCancelButton);
@@ -98,29 +83,23 @@ public class RegistrationActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (sharedpreferences.contains(username + "hash")) {
-            mUsernameView.setError(getString(R.string.error_duplicate_email));
-            focusView = mUsernameView;
-            cancel = true;
-        }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
-            Provider provider = new Provider(getApplicationContext());
+            ProviderInterface provider = Provider.getInstance(this);
             try {
-                provider.getRandomString(new Callback<String>() {
+                provider.registerUser(username, password, new Callback<String>() {
                     public void onSuccess(String result) {
                         completeRegistration(result);
                     }
-
                     public void onFailure(String result) {
                         completeRegistration(result);
                     }
                 });
             } catch (JSONException e) {
+                completeRegistration(null);
             }
         }
     }
@@ -128,21 +107,14 @@ public class RegistrationActivity extends AppCompatActivity {
         Toast message = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         if (result == null) {
             message.setText("Registration failed. Check Internet Connection");
+            message.show();
+        } else if (result.equals("duplicate")) {
+            View focusView = mUsernameView;
+            mUsernameView.setError(getString(R.string.error_duplicate_email));
         } else {
-            try {
-                MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                password += result;
-                password = new String(digest.digest(password.getBytes()));
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(username + "hash", password);
-                editor.putString(username + "salt", result);
-                editor.putBoolean(username + "isAdmin", isAdmin);
-                editor.apply();
-                message.setText("Registration Successful.");
-                finish();
-            } catch (NoSuchAlgorithmException e) {
-            }
+            message.setText("Registration Successful.");
+            message.show();
+            finish();
         }
-        message.show();
     }
 }
