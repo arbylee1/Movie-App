@@ -9,8 +9,7 @@ import org.json.JSONObject;
  * @author Albert Li
  */
 public interface ProviderInterface {
-    void registerUser(String username, String password, boolean isAdmin,
-                      final Callback<String> callback) throws JSONException;
+    void registerUser(String username, String password, final Callback<String> callback) throws JSONException;
     void loginUser(String username, String password, final Callback<JSONObject> callback) throws JSONException ;
     void getAllUsers(String authtoken, final Callback<JSONObject> callback) throws JSONException ;
     void banUser(String authtoken, final Callback<String> callback) throws JSONException ;

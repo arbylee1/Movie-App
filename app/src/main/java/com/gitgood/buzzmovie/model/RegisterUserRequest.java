@@ -10,10 +10,10 @@ import org.json.JSONException;
  * @author Albert Li
  */
 public class RegisterUserRequest extends StringRequest {
-    public static final int METHOD = Request.Method.GET;
-    public static final String URL = "https://www.albertli.biz/api/register/index.py?username=";
-    public RegisterUserRequest(String username, String password, boolean isAdmin, Response.Listener<String> listener, Response.ErrorListener errorListener)
+    public static final int METHOD = Request.Method.POST;
+    public static final String URL = "https://www.albertli.biz/api/register";
+    public RegisterUserRequest(String username, String password, Response.Listener<String> listener, Response.ErrorListener errorListener)
             throws JSONException {
-        super(METHOD, (URL + username + "&password=" + password + "&admin=" + String.valueOf(isAdmin)), listener, errorListener);
+        super(METHOD, URL + "?username=" + username + "&password=" + password, listener, errorListener);
     }
 }

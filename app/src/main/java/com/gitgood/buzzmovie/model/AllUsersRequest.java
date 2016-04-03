@@ -12,7 +12,7 @@ import org.json.JSONObject;
  */
 public class AllUsersRequest extends JsonObjectRequest {
     public static final int METHOD = Request.Method.POST;
-    public static final String URL = "https://www.albertli.biz/api/all_users/";
+    public static final String URL = "https://www.albertli.biz/api/login";
     public AllUsersRequest(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener)
             throws JSONException {
         super(METHOD, URL, null, listener, errorListener);
