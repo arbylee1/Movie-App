@@ -7,7 +7,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 
 /**
- * @author Albert Li
+ * Created by Albert Li on 3/29/16.
  */
 public class UpdateProfileRequest extends StringRequest {
     public static final int METHOD = Request.Method.POST;

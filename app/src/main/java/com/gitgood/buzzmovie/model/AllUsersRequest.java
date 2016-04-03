@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * @author Albert Li
+ * Created by Albert Li on 3/29/16.
  */
 public class AllUsersRequest extends JsonObjectRequest {
     public static final int METHOD = Request.Method.POST;
