@@ -6,18 +6,18 @@ import java.io.Serializable;
  * Created by Chudy on 2/21/16.
  */
 public class Movie implements Serializable {
-    String title;
-    String rottenTomatoID;
-    String year;
-    String rating;
-    String synopsis;
-    float numRatings = 0;
-    float averageRating = 0.0f;
+    private String title;
+    private String rottenTomatoID;
+    private String year;
+    private String rating;
+    private String synopsis;
+    private float numRatings = 0;
+    private float averageRating = 0.0f;
 
-    public Movie(String movie, String Id, String year, String rating, String synopsis, float numRatings
+    public Movie(String movie, String id, String year, String rating, String synopsis, float numRatings
                  ,float averageRating) {
         this.title = movie;
-        this.rottenTomatoID = Id;
+        this.rottenTomatoID = id;
         this.year = year;
         this.rating = rating;
         this.synopsis = synopsis;
@@ -31,7 +31,7 @@ public class Movie implements Serializable {
 
     final public float getNumRatings() {return numRatings;}
 
-    final public void addRating(float stars, String major, String User) {
+    final public void addRating(float stars, String major, String user) {
         averageRating *= numRatings;
         averageRating += stars;
         numRatings++;

@@ -22,15 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 public class SearchActivity extends AppCompatActivity {
     public final static int ROTTEN_TOMATO_GET_MATCH = 1;
     public final static int ROTTEN_TOMATO_GET_NEW_DVD = 2;
     public final static int ROTTEN_TOMATO_GET_UPCOMING_MOVIES = 3;
     private RequestQueue queue;
-    private String response;
 
     @Override
     final protected void onCreate(Bundle savedInstanceState) {
@@ -110,15 +106,15 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContactRottenTomatoes(ROTTEN_TOMATO_GET_MATCH);
+                contactRottenTomatoes(ROTTEN_TOMATO_GET_MATCH);
             }
         });
         //Top dvd button
-        Button TopDVDButton = (Button) findViewById(R.id.buttonDvd);
-        TopDVDButton.setOnClickListener(new View.OnClickListener() {
+        Button topDVDButton = (Button) findViewById(R.id.buttonDvd);
+        topDVDButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContactRottenTomatoes(ROTTEN_TOMATO_GET_NEW_DVD);
+                contactRottenTomatoes(ROTTEN_TOMATO_GET_NEW_DVD);
             }
         });
         // upcoming movie button
@@ -126,20 +122,20 @@ public class SearchActivity extends AppCompatActivity {
         NewRelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContactRottenTomatoes(ROTTEN_TOMATO_GET_UPCOMING_MOVIES);
+                contactRottenTomatoes(ROTTEN_TOMATO_GET_UPCOMING_MOVIES);
             }
         });
         return true;
     }
 
-    private void ContactRottenTomatoes (int id) {
+    private void contactRottenTomatoes (int id) {
         // All search buttons use this method the int destiguishes what search to use
         String url = "";
         if (id == ROTTEN_TOMATO_GET_MATCH) {
-            EditText SearchText = (EditText) findViewById(R.id.searchText);
-            String searchFor = SearchText.getText().toString();
-            String my_new_str = searchFor.replaceAll(" ", "%20;");
-            url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" + my_new_str + "&page_limit=20&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
+            EditText searchText = (EditText) findViewById(R.id.searchText);
+            String searchFor = searchText.getText().toString();
+            String myNewStr = searchFor.replaceAll(" ", "%20;");
+            url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" + myNewStr + "&page_limit=20&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
             Log.v("||DAN||", url);
         } else if (id == ROTTEN_TOMATO_GET_NEW_DVD) {
            url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?page_limit=20&page=1&country=us&apikey=yedukp76ffytfuy24zsqk7f5";
@@ -158,7 +154,7 @@ public class SearchActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        response = "JSon Request Failed!!";
+                        onPostExecute(null);
                     }
                 });
         queue.add(jsObjRequest);
@@ -173,45 +169,43 @@ public class SearchActivity extends AppCompatActivity {
 
     private void onPostExecute(JSONObject resp) {
         //handle a valid response coming back.  Getting this string mainly for debug
-        response = resp.toString();
         //Now we parse the information.  Looking at the format, everything encapsulated in RestResponse object
-        JSONObject obj1 = null;
-        JSONArray array = null;
-        try {
-            array = resp.getJSONArray("movies");
-            Movies.clear();
-        } catch (JSONException e) {
-            Log.i("adssda", e.toString());
-        }
-//                        Movies.clear();
-        SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
-        Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
-        Ratings.getInstance().reloadMapFromMemory();
-
-        Map<String,Rating> map2 = Ratings.getInstance().getAllRatings();
-        for(int i=0; i < array.length(); i++) {
+        if(resp != null) {
+            JSONArray array = null;
             try {
-                //for each array element, we have to create an object
-                JSONObject jsonObject = array.getJSONObject(i);
-                assert jsonObject != null;
-                String title = jsonObject.optString("title");
-                String id = jsonObject.optString("id");
-                String year = jsonObject.optString("year");
-                String rating = jsonObject.optString("mpaa_rating");
-                String synopsis = jsonObject.optString("synopsis");
-                float numRatings = sharedPreferences.getFloat(id + "numRatings", 0.0f);
-                float averageRating = sharedPreferences.getFloat(id + "averageRating", 0.0f);
-
-                Movie s = new Movie(title, id, year, rating, synopsis, numRatings, averageRating);
-                //save the object for later
-                Movies.addItem(s);
-
+                array = resp.getJSONArray("movies");
+                Movies.clear();
             } catch (JSONException e) {
-                Log.d("VolleyApp", "Failed to get JSON object");
+                Log.i("adssda", e.toString());
             }
+//                        Movies.clear();
+            SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
+            Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
+            Ratings.getInstance().reloadMapFromMemory();
+            for (int i = 0; i < array.length(); i++) {
+                try {
+                    //for each array element, we have to create an object
+                    JSONObject jsonObject = array.getJSONObject(i);
+                    assert jsonObject != null;
+                    String title = jsonObject.optString("title");
+                    String id = jsonObject.optString("id");
+                    String year = jsonObject.optString("year");
+                    String rating = jsonObject.optString("mpaa_rating");
+                    String synopsis = jsonObject.optString("synopsis");
+                    float numRatings = sharedPreferences.getFloat(id + "numRatings", 0.0f);
+                    float averageRating = sharedPreferences.getFloat(id + "averageRating", 0.0f);
+
+                    Movie s = new Movie(title, id, year, rating, synopsis, numRatings, averageRating);
+                    //save the object for later
+                    Movies.addItem(s);
+
+                } catch (JSONException e) {
+                    Log.d("VolleyApp", "Failed to get JSON object");
+                }
+            }
+            //once we have all data, then go to list screen
+            changeView();
         }
-        //once we have all data, then go to list screen
-        changeView();
     }
 
 }

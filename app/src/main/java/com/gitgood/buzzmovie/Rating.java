@@ -6,7 +6,7 @@ package com.gitgood.buzzmovie;
 
 // Information holder for ratings
 public class Rating {
-    private String RTid;
+    private String rtid;
     private String owner;
     private float number;
     private String major;
@@ -17,7 +17,7 @@ public class Rating {
     // out of the strings when pulling them out of the backend
     public Rating(String json){
         String[] tokens = json.split(",");
-        this.RTid = tokens[0];
+        this.rtid = tokens[0];
         this.owner = tokens[1];
         this.number = Float.parseFloat(tokens[2]);
         this.major = tokens[3];
@@ -30,8 +30,8 @@ public class Rating {
     }
 
     // basic constructer
-    public Rating(String RTid, String owner, float number, String major, float stars, String movieTitle) {
-        this.RTid = RTid;
+    public Rating(String rtid, String owner, float number, String major, float stars, String movieTitle) {
+        this.rtid = rtid;
         this.owner = owner;
         this.number = number;
         this.major = major;
@@ -45,12 +45,12 @@ public class Rating {
     }
 
     final public String getKey() {
-        return (RTid + "|" + owner);
+        return (rtid + "|" + owner);
     }
 
     // method to turn entire object into a String. This makes it easy to store in the backend
     final public String toString(){
-        return (RTid + "," + owner + "," + number + "," + major + "," + stars + "," + movieTitle);
+        return (rtid + "," + owner + "," + number + "," + major + "," + stars + "," + movieTitle);
     }
 
     final public String getMajor(){
@@ -58,7 +58,7 @@ public class Rating {
     }
 
     final public String getRTid() {
-        return this.RTid;
+        return this.rtid;
     }
 
     final public String getOwner() {

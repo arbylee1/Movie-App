@@ -30,13 +30,11 @@ final public class Ratings {
     public void reloadMapFromMemory() {
         if (ratingData.getAll().size() != 0 && ratingData.getAll() != null && !ratingData.getAll().isEmpty()) {
             Map<String, ?> map1 = ratingData.getAll();
-            int counter = 0;
             ratingsMap.clear(); // clear map
 
             // reload entire map from shared preferences
             for (String key : map1.keySet()) {
                 ratingsMap.put(key, new Rating((String) map1.get(key)));
-                counter++;
             }
         }
     }
@@ -72,7 +70,7 @@ final public class Ratings {
     }
 
     // runs through collection and finds ratings assosicated with a  major
-    public HashMap<String, Rating> getAllRatingsByMajor(String whatMajor) {
+    public Map<String, Rating> getAllRatingsByMajor(String whatMajor) {
         HashMap<String, Rating> byMajor = new HashMap<String, Rating>();
         for (String string : ratingsMap.keySet()) {
             String major = ratingsMap.get(string).getMajor();
@@ -107,8 +105,8 @@ final public class Ratings {
     }
 
     // runs through collection and sorts top 2 ratings by major and how highly they were rated
-    public List<Rating> getRatingsByMajorInOrder(String Whatmajor){
-        HashMap<String, Rating> byMajor = getAllRatingsByMajor(Whatmajor);
+    public List<Rating> getRatingsByMajorInOrder(String whatmajor){
+        Map<String, Rating> byMajor = getAllRatingsByMajor(whatmajor);
         ArrayList<Rating> inOrder = new ArrayList<>();
         Rating highest = new Rating();
         Rating second = new Rating();

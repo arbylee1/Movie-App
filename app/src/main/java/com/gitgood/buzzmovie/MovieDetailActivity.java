@@ -14,15 +14,15 @@ import java.text.DecimalFormat;
  * Created by Albert on 2/28/2016.
  */
 public class MovieDetailActivity extends AppCompatActivity {
-    final DecimalFormat twoPrecision = new DecimalFormat(".00");
-    SharedPreferences userInfo;
-    SharedPreferences movieData;
-    SharedPreferences ratingData;
-    CurrentUser currentUser;
-    float previousUserRating;
-    RatingBar ratingBar;
-    TextView averageRating;
-    Movie movie;
+    private final DecimalFormat twoPrecision = new DecimalFormat(".00");
+    private SharedPreferences userInfo;
+    private SharedPreferences movieData;
+    private SharedPreferences ratingData;
+    private CurrentUser currentUser;
+    private float previousUserRating;
+    private RatingBar ratingBar;
+    private TextView averageRating;
+    private Movie movie;
     final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);

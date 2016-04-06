@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class RandomObjectRequest extends JsonObjectRequest{
     public static final int METHOD = Request.Method.POST;
     public static final String URL = "https://api.random.org/json-rpc/1/invoke";
-    private static final String JString ="{\n" +
+    private static final String jString ="{\n" +
             " \"jsonrpc\": \"2.0\",\n" +
             " \"method\": \"generateStrings\",\n" +
             " \"params\": {\n" +
@@ -27,6 +27,6 @@ public class RandomObjectRequest extends JsonObjectRequest{
             "}";
     public RandomObjectRequest(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener)
             throws JSONException {
-        super(METHOD, URL, new JSONObject(JString), listener, errorListener);
+        super(METHOD, URL, new JSONObject(jString), listener, errorListener);
     }
 }

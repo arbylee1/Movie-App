@@ -46,13 +46,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     @Override
     final protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            //use the query to search
-        }
     }
 
     // configure back button to take us back to previus overall search ativity
@@ -112,10 +105,10 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View movieView;
-            public final TextView movieIdView;
-            public final TextView movieContentView;
-            public Movie movieItem;
+            private final View movieView;
+            private final TextView movieIdView;
+            private final TextView movieContentView;
+            private Movie movieItem;
 
             public ViewHolder(View view) {
                 super(view);

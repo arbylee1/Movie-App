@@ -99,13 +99,13 @@ final public class CurrentUser {
         String ban = "_ban";
         Boolean isbanned = userinfo.getBoolean(username + ban, false);
         Log.v("|DONE| ", isbanned.toString());
-        SharedPreferences.Editor Editor = userinfo.edit();
+        SharedPreferences.Editor editor = userinfo.edit();
         if (isbanned) {
-            Editor.putBoolean(username + ban, false);
+            editor.putBoolean(username + ban, false);
         } else {
-            Editor.putBoolean(username + ban, true);
+            editor.putBoolean(username + ban, true);
         }
-        Editor.apply();
+        editor.apply();
 
         return !isbanned;
     }

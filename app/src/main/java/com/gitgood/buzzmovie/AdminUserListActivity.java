@@ -22,23 +22,14 @@ import android.graphics.Color;
 
 import java.util.List;
 public class AdminUserListActivity extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    @Override
-    final protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_user_list);
-
-        // get list view from activity content
-        recyclerView = (RecyclerView) findViewById(R.id.listuser);
-        //instantiate and set adapter
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-        SharedPreferences userinfo = getSharedPreferences(
-                getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
-        List <User> allUsers = CurrentUser.getInstance().getAllUsers(userinfo);
-        recyclerView.setAdapter(new UserViewAdapter(allUsers));
+    // configure back button to take us back to previus overall search ativity
+    final public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     final public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,25 +46,24 @@ public class AdminUserListActivity extends AppCompatActivity {
     }
 
     @Override
+    final protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_user_list);
+
+        // get list view from activity content
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listuser);
+        //instantiate and set adapter
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        SharedPreferences userinfo = getSharedPreferences(
+                getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
+        List <User> allUsers = CurrentUser.getInstance().getAllUsers(userinfo);
+        recyclerView.setAdapter(new UserViewAdapter(allUsers));
+    }
+
+    @Override
     final protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search
-        }
-    }
-
-    // configure back button to take us back to previus overall search ativity
-    final public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if ((keyCode == KeyEvent.KEYCODE_BACK))
-        {
-            finish();
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     public class UserViewAdapter
@@ -144,10 +134,10 @@ public class AdminUserListActivity extends AppCompatActivity {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View movieView;
-            public final TextView movieIdView;
-            public final TextView movieContentView;
-            public User movieItem;
+            private final View movieView;
+            private final TextView movieIdView;
+            private final TextView movieContentView;
+            private User movieItem;
 
             public ViewHolder(View view) {
                 super(view);

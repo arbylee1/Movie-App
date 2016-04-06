@@ -109,6 +109,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void goToMain2() {
+        Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -172,10 +177,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void goToMain2() {
-        Intent i = new Intent(getApplicationContext(), SearchActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
-    }
 }
 
