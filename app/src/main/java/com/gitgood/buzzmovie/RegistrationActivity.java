@@ -92,19 +92,7 @@ public class RegistrationActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            Provider provider = new Provider(getApplicationContext());
-            try {
-                provider.getRandomString(new Callback<String>() {
-                    public void onSuccess(String result) {
-                        completeRegistration(result);
-                    }
-
-                    public void onFailure(String result) {
-                        completeRegistration(result);
-                    }
-                });
-            } catch (JSONException e) {
-            }
+            completeRegistration("stub");
         }
     }
     private void completeRegistration(String result) {
