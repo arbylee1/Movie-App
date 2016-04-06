@@ -1,10 +1,6 @@
 package com.gitgood.buzzmovie;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Created by Chudy on 2/21/16.
@@ -40,8 +36,6 @@ public class Movie implements Serializable {
         averageRating += stars;
         numRatings++;
         averageRating /= numRatings;
-
-        Rating rating = new Rating(rottenTomatoID, User,(numRatings - 1), major ,stars, title);
     }
 
     final public void removeRating(float stars) {

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.HashMap;
  */
 public class Ratings {
     private SharedPreferences ratingData;  // where we store all rating data
-    private HashMap<String,Rating> ratingsMap = new HashMap<>(); // Maps object to easily read all ratings
+    private Map<String,Rating> ratingsMap = new HashMap<>(); // Maps object to easily read all ratings
     private static Ratings ratings = new Ratings();
 
     private Ratings(){
@@ -82,7 +83,7 @@ public class Ratings {
         return byMajor;
     }
     // runs through collection and finds ratings assosicated with a movie (rotten tomato Id)
-    public HashMap<String, Rating> getAllRatingsbyMovie(String whatID) {
+    public Map<String, Rating> getAllRatingsbyMovie(String whatID) {
         HashMap<String, Rating> byID = new HashMap<String, Rating>();
         for (String string : ratingsMap.keySet()) {
             String id = ratingsMap.get(string).getRTid();
@@ -94,7 +95,7 @@ public class Ratings {
     }
 
     // runs through collection and finds ratings assosicated with a User (Username)
-    public HashMap<String, Rating> getAllRatingsbyUser(String whatUsername) {
+    public Map<String, Rating> getAllRatingsbyUser(String whatUsername) {
         HashMap<String, Rating> byUser = new HashMap<String, Rating>();
         for (String string : ratingsMap.keySet()) {
             String user = ratingsMap.get(string).getOwner();
@@ -106,7 +107,7 @@ public class Ratings {
     }
 
     // runs through collection and sorts top 2 ratings by major and how highly they were rated
-    public ArrayList<Rating> getRatingsByMajorInOrder(String Whatmajor){
+    public List<Rating> getRatingsByMajorInOrder(String Whatmajor){
         HashMap<String, Rating> byMajor = getAllRatingsByMajor(Whatmajor);
         ArrayList<Rating> inOrder = new ArrayList<>();
         Rating highest = new Rating();
@@ -117,9 +118,7 @@ public class Ratings {
             String removeString = " ";
             for (String string : byMajor.keySet()) {
                 if (highest.getStars() < ratingsMap.get(string).getStars()) {
-                    if (highest != null) {
-                        second = highest;
-                    }
+                    second = highest;
                     highest = ratingsMap.get(string);
                     removeString = string;
                 }

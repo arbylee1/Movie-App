@@ -12,7 +12,9 @@ public class Movies {
     /**
      * Monostate class to store the Movies most recently searched for by the user.
      */
-        public static final List<Movie> ITEMS = new ArrayList<>();
+    private Movies() {
+    }
+    public static final List<Movie> ITEMS = new ArrayList<>();
 
         /**
          * A map of Movies by Name.

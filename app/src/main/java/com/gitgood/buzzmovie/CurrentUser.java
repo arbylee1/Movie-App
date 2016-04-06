@@ -18,7 +18,6 @@ public class CurrentUser {
     private static CurrentUser currentUser = new CurrentUser();
     private static String username;
     private static String passwordHash;
-    private static String salt;
     private static Boolean isAdmin;
     private CurrentUser() {
     }
@@ -97,13 +96,14 @@ public class CurrentUser {
     }
 
     public boolean toggleIsBan(SharedPreferences userinfo, String username) {
-        Boolean isbanned = userinfo.getBoolean(username + "_ban", false);
+        String ban = "_ban";
+        Boolean isbanned = userinfo.getBoolean(username + ban, false);
         Log.v("|DONE| ", isbanned.toString());
         SharedPreferences.Editor Editor = userinfo.edit();
         if (isbanned) {
-            Editor.putBoolean(username + "_ban", false);
+            Editor.putBoolean(username + ban, false);
         } else {
-            Editor.putBoolean(username + "_ban", true);
+            Editor.putBoolean(username + ban, true);
         }
         Editor.apply();
 

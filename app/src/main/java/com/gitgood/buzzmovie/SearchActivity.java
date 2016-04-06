@@ -1,20 +1,16 @@
 package com.gitgood.buzzmovie;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,14 +18,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
-// import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
@@ -158,58 +151,8 @@ public class SearchActivity extends AppCompatActivity {
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject resp) {
-                        //handle a valid response coming back.  Getting this string mainly for debug
-                        response = resp.toString();
-                        //Now we parse the information.  Looking at the format, everything encapsulated in RestResponse object
-                        JSONObject obj1 = null;
-                        JSONArray array = null;
-                        try {
-                            array = resp.getJSONArray("movies");
-                            Movies.clear();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        assert obj1 != null;
-//                        Movies.clear();
-                        SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
-                        Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
-                        Ratings.getInstance().reloadMapFromMemory();
+                        onPostExecute(resp);
 
-                        Map<String,Rating> map2 = Ratings.getInstance().getAllRatings();;
-                        int counter = 0;
-                        Log.v("||DAN||","start 3");
-                        if (map2.keySet() != null) {
-                            for (String key : map2.keySet()) {
-                                Log.v("||DAN||", key + " => " + counter + " => " + map2.get(key));
-                                counter++;
-                            }
-                        }
-
-                        ArrayList<String> movies = new ArrayList<>();
-                        for(int i=0; i < array.length(); i++) {
-                            try {
-                                //for each array element, we have to create an object
-                                JSONObject jsonObject = array.getJSONObject(i);
-                                assert jsonObject != null;
-                                String title = jsonObject.optString("title");
-                                String id = jsonObject.optString("id");
-                                String year = jsonObject.optString("year");
-                                String rating = jsonObject.optString("mpaa_rating");
-                                String synopsis = jsonObject.optString("synopsis");
-                                float numRatings = sharedPreferences.getFloat(id + "numRatings", 0.0f);
-                                float averageRating = sharedPreferences.getFloat(id + "averageRating", 0.0f);
-
-                                Movie s = new Movie(title, id, year, rating, synopsis, numRatings, averageRating);
-                                //save the object for later
-                                Movies.addItem(s);
-
-                            } catch (JSONException e) {
-                                Log.d("VolleyApp", "Failed to get JSON object");
-                                e.printStackTrace();
-                            }
-                        }
-                        //once we have all data, then go to list screen
-                        changeView();
                     }
                 }, new Response.ErrorListener() {
 
@@ -228,5 +171,47 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void onPostExecute(JSONObject resp) {
+        //handle a valid response coming back.  Getting this string mainly for debug
+        response = resp.toString();
+        //Now we parse the information.  Looking at the format, everything encapsulated in RestResponse object
+        JSONObject obj1 = null;
+        JSONArray array = null;
+        try {
+            array = resp.getJSONArray("movies");
+            Movies.clear();
+        } catch (JSONException e) {
+            Log.i("adssda", e.toString());
+        }
+//                        Movies.clear();
+        SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
+        Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
+        Ratings.getInstance().reloadMapFromMemory();
+
+        Map<String,Rating> map2 = Ratings.getInstance().getAllRatings();
+        for(int i=0; i < array.length(); i++) {
+            try {
+                //for each array element, we have to create an object
+                JSONObject jsonObject = array.getJSONObject(i);
+                assert jsonObject != null;
+                String title = jsonObject.optString("title");
+                String id = jsonObject.optString("id");
+                String year = jsonObject.optString("year");
+                String rating = jsonObject.optString("mpaa_rating");
+                String synopsis = jsonObject.optString("synopsis");
+                float numRatings = sharedPreferences.getFloat(id + "numRatings", 0.0f);
+                float averageRating = sharedPreferences.getFloat(id + "averageRating", 0.0f);
+
+                Movie s = new Movie(title, id, year, rating, synopsis, numRatings, averageRating);
+                //save the object for later
+                Movies.addItem(s);
+
+            } catch (JSONException e) {
+                Log.d("VolleyApp", "Failed to get JSON object");
+            }
+        }
+        //once we have all data, then go to list screen
+        changeView();
+    }
 
 }
