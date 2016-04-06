@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private Boolean isAdmin = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -109,6 +109,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void goToMain2() {
+        Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -124,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected final Boolean doInBackground(Void... params) {
             SharedPreferences sharedpreferences = getSharedPreferences(
                     getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
             String hash = sharedpreferences.getString(mUsername + "hash",null);
@@ -143,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected final void onPostExecute(final Boolean success) {
             mAuthTask = null;
             if (success) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT);
@@ -167,15 +172,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onCancelled() {
+        protected final void onCancelled() {
             mAuthTask = null;
         }
     }
 
-    private void goToMain2() {
-        Intent i = new Intent(getApplicationContext(), SearchActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
-    }
 }
 

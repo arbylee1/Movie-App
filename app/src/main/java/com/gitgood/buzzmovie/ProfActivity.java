@@ -4,16 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 
 public class ProfActivity extends AppCompatActivity {
@@ -22,17 +20,14 @@ public class ProfActivity extends AppCompatActivity {
     private EditText mName;
     private EditText mmMajor;
     private EditText mInterest;
-    private TextView mUserType;
-    private Button bUpdate;
-    private Button bCancel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prof);
 
         // Set cancel button => Resets the View
-        bCancel = (Button) findViewById(R.id.bbCancel);
+        Button bCancel = (Button) findViewById(R.id.bbCancel);
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +40,7 @@ public class ProfActivity extends AppCompatActivity {
         mName = (EditText) findViewById(R.id.eName);
         mmMajor = (EditText) findViewById(R.id.eMajor);
         mInterest = (EditText) findViewById(R.id.eInterest);
-        mUserType = (TextView) findViewById(R.id.userType);
+        TextView mUserType = (TextView) findViewById(R.id.userType);
 
         // Logic to get Current User and all associated fields as well as fill current values into
         // the view
@@ -68,7 +63,7 @@ public class ProfActivity extends AppCompatActivity {
 
         // Set update button and logic. Logic will take all field values and update user fields in
         // the backend
-        bUpdate = (Button) findViewById(R.id.bbUpdate);
+        Button bUpdate = (Button) findViewById(R.id.bbUpdate);
         final SharedPreferences.Editor editor2 = userInfo.edit();
         bUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,13 +72,16 @@ public class ProfActivity extends AppCompatActivity {
                 editor2.putString(currentUsername + "_major", mmMajor.getText().toString());
                 editor2.putString(currentUsername + "_interests", mInterest.getText().toString());
                 editor2.apply();
-                Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+                Intent i = new Intent(getApplicationContext(), ProfActivity.class);
                 Toast toast = Toast.makeText(getApplicationContext(), "Profile Succesfully updated", Toast.LENGTH_SHORT);
                 toast.show();
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });
+    }
+    private void onPostExecute(JSONObject result) {
+
     }
 
 }

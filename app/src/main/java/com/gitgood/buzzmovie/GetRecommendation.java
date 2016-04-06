@@ -10,16 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 // Controller for Recomendation Activity.
 public class GetRecommendation extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_recommendation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,7 +60,7 @@ public class GetRecommendation extends AppCompatActivity {
                 TextView response = (TextView) findViewById(R.id.resultsView);
                 String result = " ";
                 if (Ratings.getInstance().getMajorSet().contains(findme)) {
-                    ArrayList<Rating> ratingsInorder = Ratings.getInstance().getRatingsByMajorInOrder(findme);
+                    List<Rating> ratingsInorder = Ratings.getInstance().getRatingsByMajorInOrder(findme);
                     // make it into an easily displayed string
                     for (int i = 0; (i < ratingsInorder.size() && i < 3); i++) {
                         result += (ratingsInorder.get(i).getTitle() + "   " + ratingsInorder.get(i).getStars() + "/5.0    ");

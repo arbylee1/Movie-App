@@ -5,13 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,31 +20,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.graphics.Color;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 public class AdminUserListActivity extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_user_list);
-
-        // get list view from activity content
-        recyclerView = (RecyclerView) findViewById(R.id.listuser);
-        //instantiate and set adapter
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-        SharedPreferences userinfo = getSharedPreferences(
-                getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
-        List <User> allUsers = CurrentUser.getInstance().getAllUsers(userinfo);
-        recyclerView.setAdapter(new UserViewAdapter(allUsers));
+    // configure back button to take us back to previus overall search ativity
+    public final boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public final boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
         SearchManager searchManager =
@@ -61,53 +46,52 @@ public class AdminUserListActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
+    protected final void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_user_list);
+
+        // get list view from activity content
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listuser);
+        //instantiate and set adapter
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        SharedPreferences userinfo = getSharedPreferences(
+                getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
+        List <User> allUsers = CurrentUser.getInstance().getAllUsers(userinfo);
+        recyclerView.setAdapter(new UserViewAdapter(allUsers));
     }
 
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search
-        }
-    }
-
-    // configure back button to take us back to previus overall search ativity
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if ((keyCode == KeyEvent.KEYCODE_BACK))
-        {
-            finish();
-        }
-        return super.onKeyDown(keyCode, event);
+    @Override
+    protected final void onNewIntent(Intent intent) {
     }
 
     public class UserViewAdapter
             extends RecyclerView.Adapter<UserViewAdapter.ViewHolder> {
 
-        private final List<User> Users;
+        private final List<User> users;
 
         public UserViewAdapter(List<User> items) {
-            Users = items;
+            users = items;
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.user_detail, null);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public final void onBindViewHolder(final ViewHolder holder, int position) {
             Log.d("Hiooo", String.valueOf(position));
-            User user = Users.get(position);
+            User user = users.get(position);
             holder.movieItem = user;
             holder.movieIdView.setText(user.getUserName());
             holder.movieIdView.setTextSize(16);
 
 
-            if (Users.get(position).getBanStatus()) {
+            if (users.get(position).getBanStatus()) {
                 holder.itemView.setBackgroundColor(Color.RED);
                 holder.movieContentView.setText("blocked");
             } else {
@@ -145,15 +129,15 @@ public class AdminUserListActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getItemCount() {
-            return Users.size();
+        public final int getItemCount() {
+            return users.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View movieView;
-            public final TextView movieIdView;
-            public final TextView movieContentView;
-            public User movieItem;
+            private final View movieView;
+            private final TextView movieIdView;
+            private final TextView movieContentView;
+            private User movieItem;
 
             public ViewHolder(View view) {
                 super(view);
@@ -163,7 +147,7 @@ public class AdminUserListActivity extends AppCompatActivity {
             }
 
             @Override
-            public String toString() {
+            public final String toString() {
                 return super.toString() + " '" + movieContentView.getText() + "'";
             }
         }

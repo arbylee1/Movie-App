@@ -4,8 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,19 +14,14 @@ import android.view.MenuInflater;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ArrayAdapter;
 import android.view.KeyEvent;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         // get list view from activity content
@@ -38,7 +31,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public final boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
         SearchManager searchManager =
@@ -52,19 +45,11 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search
-        }
+    protected final void onNewIntent(Intent intent) {
     }
 
     // configure back button to take us back to previus overall search ativity
-    public boolean onKeyDown(int keyCode, KeyEvent event)
+    public final boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
@@ -90,14 +75,14 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.movie_detail, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public final void onBindViewHolder(final ViewHolder holder, int position) {
             holder.movieItem = movieValues.get(position);
             holder.movieIdView.setText(movieValues.get(position).getMovie());
             holder.movieContentView.setText(movieValues.get(position).toString());
@@ -115,15 +100,15 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getItemCount() {
+        public final int getItemCount() {
             return movieValues.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View movieView;
-            public final TextView movieIdView;
-            public final TextView movieContentView;
-            public Movie movieItem;
+            private final View movieView;
+            private final TextView movieIdView;
+            private final TextView movieContentView;
+            private Movie movieItem;
 
             public ViewHolder(View view) {
                 super(view);
@@ -133,7 +118,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
 
             @Override
-            public String toString() {
+            public final String toString() {
                 return super.toString() + " '" + movieContentView.getText() + "'";
             }
         }

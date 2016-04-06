@@ -1,5 +1,7 @@
 package com.gitgood.buzzmovie;
 
+import java.util.Map;
+
 /**
  * Created by Jeff on 2/15/2016.
  * User infoholder class. Will act
@@ -7,50 +9,38 @@ package com.gitgood.buzzmovie;
  * a subclass of User.
  */
 public class User {
-    private String email;
+    public static User currentUser;
+    private String username;
+    private String authToken;
     private String name;
-    private String userName;
-    private String password;
     private String major;
+    private String email;
     private String interests;
     private boolean isAdmin;
     private boolean isBanned;
+    private Map<String, Float> ratings;
 
-    public User(String email, String name, String userName, String password, String major) {
+    public User(String username, String authToken, String name, String major, String email,
+                String interests, boolean isAdmin, boolean isBanned, Map<String, Float> ratings) {
+        this.username = username;
+        this.authToken = authToken;
         this.email = email;
         this.name = name;
-        this.userName = userName;
-        this.password = password;
+        this.username = username;
         this.major = major;
-        this.interests = "";
-        this.isAdmin = false;
-        this.isBanned = false;
+        this.interests = interests;
+        this.isAdmin = isAdmin;
+        this.isBanned = isBanned;
+        this.ratings = ratings;
     }
 
-    public User(String name, String userName, String password) {
-        this.email = "";
-        this.name = name;
-        this.userName = userName;
-        this.password = password;
-        this.major = "";
-        this.interests = "";
-    }
-
-    public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public User(String username, String name, Boolean isBanned, Boolean isAdmin) {
-        this.userName = username;
+    public User(String username, Boolean isBanned) {
+        this.username = username;
         if (name != null) {
             this.name = name;
         }
         if (isBanned != null) {
             this.isBanned = isBanned;
-        }
-        if (isAdmin != null ) {
-            this.isAdmin = isAdmin;
         }
     }
 
@@ -62,11 +52,11 @@ public class User {
         return name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public String getPassword() { return password; }
+    public String getAuthToken() { return authToken; }
 
     public String getMajor() {
         return major;
@@ -85,10 +75,10 @@ public class User {
     }
 
     public void setUserName(String input) {
-        this.userName = input;
+        this.username = input;
     }
 
-    public void setPassword(String input) {this.password = input; }
+    public void setAuthToken(String input) {this.authToken = input; }
 
     public void setMajor(String input) {
         this.major = input;
@@ -119,6 +109,10 @@ public class User {
     }
 
     public String toString() {
-        return (userName + " " + name + " " + isAdmin + " " + isBanned);
+        return (username + " " + name + " " + isAdmin + " " + isBanned);
+    }
+
+    public Map<String, Float> getRatings() {
+        return ratings;
     }
 }
