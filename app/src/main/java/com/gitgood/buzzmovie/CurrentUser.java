@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * This static object keeps track of the Current users and can be called anywhere in the appilcation
  * this makes user tracking and admin verification easy. Only gets reset at login screen
  */
-public class CurrentUser {
+final public class CurrentUser {
     private static CurrentUser currentUser = new CurrentUser();
     private static String username;
     private static String passwordHash;
