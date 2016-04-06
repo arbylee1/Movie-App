@@ -23,7 +23,7 @@ import android.graphics.Color;
 import java.util.List;
 public class AdminUserListActivity extends AppCompatActivity {
     // configure back button to take us back to previus overall search ativity
-    final public boolean onKeyDown(int keyCode, KeyEvent event)
+    public final boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
@@ -32,7 +32,7 @@ public class AdminUserListActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    final public boolean onCreateOptionsMenu(Menu menu) {
+    public final boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
         SearchManager searchManager =
@@ -46,7 +46,7 @@ public class AdminUserListActivity extends AppCompatActivity {
     }
 
     @Override
-    final protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_user_list);
 
@@ -63,35 +63,35 @@ public class AdminUserListActivity extends AppCompatActivity {
     }
 
     @Override
-    final protected void onNewIntent(Intent intent) {
+    protected final void onNewIntent(Intent intent) {
     }
 
     public class UserViewAdapter
             extends RecyclerView.Adapter<UserViewAdapter.ViewHolder> {
 
-        private final List<User> Users;
+        private final List<User> users;
 
         public UserViewAdapter(List<User> items) {
-            Users = items;
+            users = items;
         }
 
         @Override
-        final public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.user_detail, null);
             return new ViewHolder(view);
         }
 
         @Override
-        final public void onBindViewHolder(final ViewHolder holder, int position) {
+        public final void onBindViewHolder(final ViewHolder holder, int position) {
             Log.d("Hiooo", String.valueOf(position));
-            User user = Users.get(position);
+            User user = users.get(position);
             holder.movieItem = user;
             holder.movieIdView.setText(user.getUserName());
             holder.movieIdView.setTextSize(16);
 
 
-            if (Users.get(position).getBanStatus()) {
+            if (users.get(position).getBanStatus()) {
                 holder.itemView.setBackgroundColor(Color.RED);
                 holder.movieContentView.setText("blocked");
             } else {
@@ -129,8 +129,8 @@ public class AdminUserListActivity extends AppCompatActivity {
         }
 
         @Override
-        final public int getItemCount() {
-            return Users.size();
+        public final int getItemCount() {
+            return users.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -147,7 +147,7 @@ public class AdminUserListActivity extends AppCompatActivity {
             }
 
             @Override
-            final public String toString() {
+            public final String toString() {
                 return super.toString() + " '" + movieContentView.getText() + "'";
             }
         }

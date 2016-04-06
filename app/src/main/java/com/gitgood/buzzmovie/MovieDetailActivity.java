@@ -23,7 +23,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private TextView averageRating;
     private Movie movie;
-    final protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         ratingData = getSharedPreferences("RatingData", Context.MODE_PRIVATE);

@@ -23,13 +23,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SearchActivity extends AppCompatActivity {
-    public final static int ROTTEN_TOMATO_GET_MATCH = 1;
-    public final static int ROTTEN_TOMATO_GET_NEW_DVD = 2;
-    public final static int ROTTEN_TOMATO_GET_UPCOMING_MOVIES = 3;
+    public static final int ROTTEN_TOMATO_GET_MATCH = 1;
+    public static final int ROTTEN_TOMATO_GET_NEW_DVD = 2;
+    public static final int ROTTEN_TOMATO_GET_UPCOMING_MOVIES = 3;
     private RequestQueue queue;
 
     @Override
-    final protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Load all contents and prepare Volley Queue
         setContentView(R.layout.activity_search);
@@ -37,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
-    final public boolean onCreateOptionsMenu(Menu menu) {
+    public final boolean onCreateOptionsMenu(Menu menu) {
         // load in all buttons and text edit also set even methods
         MenuInflater inflater = getMenuInflater();
         // Inflate menu to add items to action bar if it is present.
@@ -118,8 +118,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         // upcoming movie button
-        Button NewRelButton = (Button) findViewById(R.id.buttonRel);
-        NewRelButton.setOnClickListener(new View.OnClickListener() {
+        Button newRelButton = (Button) findViewById(R.id.buttonRel);
+        newRelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 contactRottenTomatoes(ROTTEN_TOMATO_GET_UPCOMING_MOVIES);

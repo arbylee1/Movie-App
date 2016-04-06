@@ -17,7 +17,7 @@ import java.util.Set;
 public class GetRecommendation extends AppCompatActivity {
 
     @Override
-    final protected void onCreate(Bundle savedInstanceState) {
+     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_recommendation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

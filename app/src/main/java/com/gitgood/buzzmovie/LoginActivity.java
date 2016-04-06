@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private Boolean isAdmin = false;
 
     @Override
-    final protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        final protected Boolean doInBackground(Void... params) {
+        protected final Boolean doInBackground(Void... params) {
             SharedPreferences sharedpreferences = getSharedPreferences(
                     getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
             String hash = sharedpreferences.getString(mUsername + "hash",null);
@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        final protected void onPostExecute(final Boolean success) {
+        protected final void onPostExecute(final Boolean success) {
             mAuthTask = null;
             if (success) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT);
@@ -172,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        final protected void onCancelled() {
+        protected final void onCancelled() {
             mAuthTask = null;
         }
     }

@@ -14,7 +14,7 @@ import java.util.HashMap;
  * monostatic global object that handles all ratings within the system.
  * This Object will do all backend tracking, maintaining, adding, removing, and sorting of ratings in the system
  */
-final public class Ratings {
+public final class Ratings {
     private SharedPreferences ratingData;  // where we store all rating data
     private Map<String,Rating> ratingsMap = new HashMap<>(); // Maps object to easily read all ratings
     private static Ratings ratings = new Ratings();

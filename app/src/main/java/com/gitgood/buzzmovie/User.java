@@ -7,15 +7,6 @@ package com.gitgood.buzzmovie;
  * a subclass of User.
  */
 public class User {
-    private String email;
-    private String name;
-    private String userName;
-    private String password;
-    private String major;
-    private String interests;
-    private boolean isAdmin;
-    private boolean isBanned;
-
     public User(String email, String name, String userName, String password, String major) {
         this.email = email;
         this.name = name;
@@ -53,72 +44,80 @@ public class User {
             this.isAdmin = isAdmin;
         }
     }
-
-    final public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
-    final public String getName() {
+    public final String getName() {
         return name;
     }
 
-    final public String getUserName() {
+    public final String getUserName() {
         return userName;
     }
 
-    final public String getPassword() { return password; }
+    public final String getPassword() { return password; }
 
-    final public String getMajor() {
+    public final String getMajor() {
         return major;
     }
 
-    final public String getInterests() {
+    public final String getInterests() {
         return interests;
     }
 
-    final public void setEmail(String input) {
+    public final void setEmail(String input) {
         this.email = input;
     }
 
-    final public void setName(String input) {
+    public final void setName(String input) {
         this.name = input;
     }
 
-    final public void setUserName(String input) {
+    public final void setUserName(String input) {
         this.userName = input;
     }
 
-    final public void setPassword(String input) {this.password = input; }
+    public final void setPassword(String input) {this.password = input; }
 
-    final public void setMajor(String input) {
+    public final void setMajor(String input) {
         this.major = input;
     }
 
-    final public void setInterests(String input) {
+    public final void setInterests(String input) {
         this.interests = input;
     }
 
-    final public boolean getAdminStatus() {
+    public final boolean getAdminStatus() {
         return isAdmin;
     }
 
-    final public void createAdmin() {
+    public final void createAdmin() {
         this.isAdmin = true;
     }
 
-    final public void ban() {
+    public final void ban() {
         this.isBanned = true;
     }
 
-    final public void unBan() {
+    public final void unBan() {
         this.isBanned = false;
     }
 
-    final public boolean getBanStatus() {
+    public final boolean getBanStatus() {
         return isBanned;
     }
 
-    final public String toString() {
+    public final String toString() {
         return (userName + " " + name + " " + isAdmin + " " + isBanned);
     }
+
+    private String email;
+    private String name;
+    private String userName;
+    private String password;
+    private String major;
+    private String interests;
+    private boolean isAdmin;
+    private boolean isBanned;
 }

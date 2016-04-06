@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Albert on 2/28/2016.
  */
-final public class Movies {
+public final class Movies {
     /**
      * Monostate class to store the Movies most recently searched for by the user.
      */

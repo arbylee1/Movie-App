@@ -20,7 +20,7 @@ public class ProfActivity extends AppCompatActivity {
     private EditText mInterest;
 
     @Override
-    final protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prof);
 

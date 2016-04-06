@@ -25,45 +25,45 @@ public class Movie implements Serializable {
         this.averageRating = averageRating;
     }
 
-    final public float getAverageRating() {
+    public final float getAverageRating() {
         return averageRating;
     }
 
-    final public float getNumRatings() {return numRatings;}
+    public final float getNumRatings() {return numRatings;}
 
-    final public void addRating(float stars, String major, String user) {
+    public final void addRating(float stars, String major, String user) {
         averageRating *= numRatings;
         averageRating += stars;
         numRatings++;
         averageRating /= numRatings;
     }
 
-    final public void removeRating(float stars) {
+    public final void removeRating(float stars) {
         averageRating *= numRatings;
         averageRating -= stars;
         numRatings--;
         averageRating /= numRatings;
     }
 
-    final public String getMovie() {
+    public final String getMovie() {
         return title;
     }
 
-    final public String getRottenTomatoID() {
+    public final String getRottenTomatoID() {
         return rottenTomatoID;
     }
 
-    final public String getYear() {
+    public final String getYear() {
         return year;
     }
 
-    final public String getSynopsis() {return synopsis;}
+    public final String getSynopsis() {return synopsis;}
 
-    final public String getRating() {
+    public final String getRating() {
         return rating;
     }
 
-    final public String toString() {
+    public final String toString() {
         return "Name: " + title + " (" + year + "), Rating: " + rating;
     }
 
