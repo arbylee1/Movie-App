@@ -33,13 +33,6 @@ public class User {
         this.isBanned = isBanned;
         this.ratings = ratings;
     }
-    public User(String username, String name, Boolean isAdmin, Boolean isBanned) {
-        this.username = username;
-        this.name = name;
-        this.isAdmin = isAdmin;
-        this.isBanned = isBanned;
-    }
-
 
     public User(String username, Boolean isBanned) {
         this.username = username;

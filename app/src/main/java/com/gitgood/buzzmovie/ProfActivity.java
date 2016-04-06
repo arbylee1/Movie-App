@@ -1,19 +1,16 @@
 package com.gitgood.buzzmovie;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gitgood.buzzmovie.model.Callback;
-import com.gitgood.buzzmovie.model.ProviderInterface;
-import com.gitgood.buzzmovie.model.SharedPreferencesProvider;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -21,11 +18,8 @@ public class ProfActivity extends AppCompatActivity {
 
     // set all modifiedable widgets in Activity
     private EditText mName;
-    private EditText mMajor;
+    private EditText mmMajor;
     private EditText mInterest;
-    private JSONObject values;
-    private User curr = User.currentUser;
-    private ProviderInterface providerInterface;
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
@@ -41,22 +35,26 @@ public class ProfActivity extends AppCompatActivity {
                 startActivity(getIntent());
             }
         });
-        providerInterface = SharedPreferencesProvider.getInstance(this);
 
         // Instatiate set all modifiedable widgets
         mName = (EditText) findViewById(R.id.eName);
-
-
-        mMajor = (EditText) findViewById(R.id.eMajor);
+        mmMajor = (EditText) findViewById(R.id.eMajor);
         mInterest = (EditText) findViewById(R.id.eInterest);
         TextView mUserType = (TextView) findViewById(R.id.userType);
 
         // Logic to get Current User and all associated fields as well as fill current values into
         // the view
-        mName.setText(curr.getName());
-        mMajor.setText(curr.getMajor());
-        mInterest.setText(curr.getInterests());
-        if (curr.getAdminStatus()) {
+        SharedPreferences currentUser = getSharedPreferences(
+                getResources().getString(R.string.CurrentUser), Context.MODE_PRIVATE);
+
+        SharedPreferences userInfo = getSharedPreferences(
+                getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
+
+        final String currentUsername = currentUser.getString("username", null);
+        mName.setText(userInfo.getString(currentUsername + "_name", "Set Name" ));
+        mmMajor.setText(userInfo.getString(currentUsername + "_major", "Set Major"));
+        mInterest.setText(userInfo.getString(currentUsername + "_interests", "Set Interests"));
+        if (currentUser.getBoolean("isAdmin", false)) {
             mUserType.setText("User Type: Admin");
         } else {
             mUserType.setText("User Type: Student");
@@ -66,43 +64,24 @@ public class ProfActivity extends AppCompatActivity {
         // Set update button and logic. Logic will take all field values and update user fields in
         // the backend
         Button bUpdate = (Button) findViewById(R.id.bbUpdate);
+        final SharedPreferences.Editor editor2 = userInfo.edit();
         bUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    values = new JSONObject();
-                    values.put("name", mName.getText());
-                    values.put("major", mMajor.getText());
-                    values.put("email", "");
-                    values.put("interests", mInterest.getText());
-                    providerInterface.updateProfile(curr.getUsername(), curr.getAuthToken(), values, new Callback<JSONObject>() {
-                        @Override
-                        public void onSuccess(JSONObject result) {
-                            onPostExecute(result);
-                        }
-                    });
-                } catch (JSONException e) {
-                    Log.d("PostExecute", "JSONException. Wat.");
-                }
+                editor2.putString(currentUsername + "_name", mName.getText().toString());
+                editor2.putString(currentUsername + "_major", mmMajor.getText().toString());
+                editor2.putString(currentUsername + "_interests", mInterest.getText().toString());
+                editor2.apply();
+                Intent i = new Intent(getApplicationContext(), ProfActivity.class);
+                Toast toast = Toast.makeText(getApplicationContext(), "Profile Succesfully updated", Toast.LENGTH_SHORT);
+                toast.show();
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
             }
         });
     }
     private void onPostExecute(JSONObject result) {
-        Toast msg = Toast.makeText(this, "Successfully updated!", Toast.LENGTH_SHORT);
-        if(result == null) {
-            msg.setText("Something failed. Check internet connection and try again.");
-        } else if (result.isNull("error")) {
-            try {
-                User.currentUser.setName(result.getString("name"));
-                User.currentUser.setMajor(result.getString("major"));
-                User.currentUser.setInterests(result.getString("interests"));
-                msg.show();
-            } catch (JSONException e) {
-                msg.setText("Something failed. Check internet connection and try again.");
-            }
-        } else {
-            msg.setText("Your session has expired. Please log back in.");
-        }
+
     }
 
 }
