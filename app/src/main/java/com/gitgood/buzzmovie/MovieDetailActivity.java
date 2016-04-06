@@ -23,7 +23,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     RatingBar ratingBar;
     TextView averageRating;
     Movie movie;
-    protected void onCreate(Bundle savedInstanceState) {
+    final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         ratingData = getSharedPreferences("RatingData", Context.MODE_PRIVATE);
@@ -73,17 +73,16 @@ public class MovieDetailActivity extends AppCompatActivity {
             movie.removeRating(previousUserRating);
         }
 
-        // DEPRECATED: this was to system before we changed it.
-//        SharedPreferences.Editor userInfoEditor = userInfo.edit();
-//        SharedPreferences.Editor movieDataEditor = movieData.edit();
-//        userInfoEditor.putFloat(movie.getRottenTomatoID() + currentUser.getUsername() + "rating"
-//                , newUserRating);
-//        movieDataEditor.putFloat(movie.getRottenTomatoID() + "averageRating"
-//                , movie.getAverageRating());
-//        movieDataEditor.putFloat(movie.getRottenTomatoID() + "numRatings"
-//                , movie.getNumRatings());
-//        userInfoEditor.apply();
-//        movieDataEditor.apply();
+        SharedPreferences.Editor userInfoEditor = userInfo.edit();
+        SharedPreferences.Editor movieDataEditor = movieData.edit();
+        userInfoEditor.putFloat(movie.getRottenTomatoID() + currentUser.getUsername() + "rating"
+                , newUserRating);
+        movieDataEditor.putFloat(movie.getRottenTomatoID() + "averageRating"
+                , movie.getAverageRating());
+        movieDataEditor.putFloat(movie.getRottenTomatoID() + "numRatings"
+                , movie.getNumRatings());
+        userInfoEditor.apply();
+        movieDataEditor.apply();
         previousUserRating = newUserRating;
         updateText();
     }

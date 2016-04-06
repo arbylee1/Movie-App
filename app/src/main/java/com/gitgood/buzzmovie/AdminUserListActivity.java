@@ -31,7 +31,7 @@ public class AdminUserListActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_user_list);
 
@@ -47,7 +47,7 @@ public class AdminUserListActivity extends AppCompatActivity {
         recyclerView.setAdapter(new UserViewAdapter(allUsers));
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    final public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
         SearchManager searchManager =
@@ -61,7 +61,7 @@ public class AdminUserListActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    final protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }
 
@@ -73,7 +73,7 @@ public class AdminUserListActivity extends AppCompatActivity {
     }
 
     // configure back button to take us back to previus overall search ativity
-    public boolean onKeyDown(int keyCode, KeyEvent event)
+    final public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
@@ -92,14 +92,14 @@ public class AdminUserListActivity extends AppCompatActivity {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.user_detail, null);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        final public void onBindViewHolder(final ViewHolder holder, int position) {
             Log.d("Hiooo", String.valueOf(position));
             User user = Users.get(position);
             holder.movieItem = user;
@@ -145,7 +145,7 @@ public class AdminUserListActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getItemCount() {
+        final public int getItemCount() {
             return Users.size();
         }
 
@@ -163,7 +163,7 @@ public class AdminUserListActivity extends AppCompatActivity {
             }
 
             @Override
-            public String toString() {
+            final public String toString() {
                 return super.toString() + " '" + movieContentView.getText() + "'";
             }
         }

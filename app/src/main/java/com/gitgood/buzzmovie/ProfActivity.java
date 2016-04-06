@@ -27,7 +27,7 @@ public class ProfActivity extends AppCompatActivity {
     private Button bCancel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prof);
 

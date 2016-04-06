@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class Ratings {
     private SharedPreferences ratingData;  // where we store all rating data
-    private HashMap<String,Rating> ratingsMap = new HashMap<String,Rating>(); // Maps object to easily read all ratings
+    private HashMap<String,Rating> ratingsMap = new HashMap<>(); // Maps object to easily read all ratings
     private static Ratings ratings = new Ratings();
 
     private Ratings(){
@@ -27,17 +27,15 @@ public class Ratings {
 
     // goes into the sharedpreferences and reloads all back-edn rating data into the front end map object
     public void reloadMapFromMemory() {
-        if (ratingData.getAll().size() != 0) {
-            if (ratingData.getAll() != null && !ratingData.getAll().isEmpty()) {
-                Map<String, ?> map1 = ratingData.getAll();
-                int counter = 0;
-                ratingsMap.clear(); // clear map
+        if (ratingData.getAll().size() != 0 && ratingData.getAll() != null && !ratingData.getAll().isEmpty()) {
+            Map<String, ?> map1 = ratingData.getAll();
+            int counter = 0;
+            ratingsMap.clear(); // clear map
 
-                // reload entire map from shared preferences
-                for (String key : map1.keySet()) {
-                    ratingsMap.put(key, new Rating((String) map1.get(key)));
-                    counter++;
-                }
+            // reload entire map from shared preferences
+            for (String key : map1.keySet()) {
+                ratingsMap.put(key, new Rating((String) map1.get(key)));
+                counter++;
             }
         }
     }
@@ -68,7 +66,7 @@ public class Ratings {
     }
 
     // give collection of all ratinging in system
-    public HashMap<String, Rating> getAllRatings(){
+    public Map<String, Rating> getAllRatings(){
         return ratingsMap;
     }
 

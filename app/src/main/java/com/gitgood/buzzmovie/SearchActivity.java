@@ -40,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
     private String response;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Load all contents and prepare Volley Queue
         setContentView(R.layout.activity_search);
@@ -48,7 +48,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    final public boolean onCreateOptionsMenu(Menu menu) {
         // load in all buttons and text edit also set even methods
         MenuInflater inflater = getMenuInflater();
         // Inflate menu to add items to action bar if it is present.
@@ -170,26 +170,8 @@ public class SearchActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         assert obj1 != null;
-                        //From that object, we extract the array of actual data labeled result
 //                        Movies.clear();
                         SharedPreferences sharedPreferences = getSharedPreferences("MovieData", MODE_PRIVATE);
-//                        Map<String,?> map = sharedPreferences.getAll();
-//                        int counter = 0;
-//                        Log.v("||DAN||", "we in");
-//                        for (String key : map.keySet()) {
-//                            Log.v("||DAN||", key + " => " + counter + " => " + map.get(key));
-//                            counter++;
-//                        }
-//
-//                        SharedPreferences sharedPreferences2 = getSharedPreferences("RatingData", MODE_PRIVATE);
-//                        Map<String,?> map1 = sharedPreferences2.getAll();
-//                        counter = 0;
-//
-//                        Log.v("||DAN||", "start 2");
-//                        for (String key : map1.keySet()) {
-//                            Log.v("||DAN||", key + " => " + counter + " => " + map1.get(key));
-//                            counter++;
-//                        }
                         Ratings.getInstance().setSharedPreference(getSharedPreferences("RatingData", Context.MODE_PRIVATE));
                         Ratings.getInstance().reloadMapFromMemory();
 
@@ -234,12 +216,8 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         response = "JSon Request Failed!!";
-                        //show error on phone
-//                        TextView view = (TextView) findViewById(R.id.textView2);
-//                        view.setText(response);
                     }
                 });
-        //this actually queues up the async response with Volley
         queue.add(jsObjRequest);
 
     }

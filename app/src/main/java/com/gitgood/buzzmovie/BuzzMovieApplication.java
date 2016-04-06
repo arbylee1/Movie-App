@@ -11,13 +11,13 @@ public class BuzzMovieApplication extends Application {
     private static Context appContext;
 
     @Override
-    public void onCreate() {
+    final public void onCreate() {
         super.onCreate();
         instance = this;
         appContext = getApplicationContext();
     }
 
-    public void setAppContext(Context context) {
+    final public void setAppContext(Context context) {
         appContext = context;
     }
     public static Context getAppContext () {

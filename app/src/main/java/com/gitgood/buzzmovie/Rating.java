@@ -44,32 +44,32 @@ public class Rating {
         this.stars = 0;
     }
 
-    public String getKey() {
+    final public String getKey() {
         return (RTid + "|" + owner);
     }
 
     // method to turn entire object into a String. This makes it easy to store in the backend
-    public String toString(){
+    final public String toString(){
         return (RTid + "," + owner + "," + number + "," + major + "," + stars + "," + movieTitle);
     }
 
-    public String getMajor(){
+    final public String getMajor(){
         return this.major;
     }
 
-    public String getRTid() {
+    final public String getRTid() {
         return this.RTid;
     }
 
-    public String getOwner() {
+    final public String getOwner() {
         return this.owner;
     }
 
-    public float getStars() {
+    final public float getStars() {
         return this.stars;
     }
 
-    public String getTitle() {
+    final public String getTitle() {
         return this.movieTitle;
     }
 }

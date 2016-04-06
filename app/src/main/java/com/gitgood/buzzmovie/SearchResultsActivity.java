@@ -28,7 +28,7 @@ import java.util.List;
 public class SearchResultsActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         // get list view from activity content
@@ -38,7 +38,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    final public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
         SearchManager searchManager =
@@ -52,7 +52,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    final protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }
 
@@ -64,7 +64,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     // configure back button to take us back to previus overall search ativity
-    public boolean onKeyDown(int keyCode, KeyEvent event)
+    final public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
@@ -90,14 +90,14 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.movie_detail, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        final public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.movieItem = movieValues.get(position);
             holder.movieIdView.setText(movieValues.get(position).getMovie());
             holder.movieContentView.setText(movieValues.get(position).toString());
@@ -115,7 +115,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getItemCount() {
+        final public int getItemCount() {
             return movieValues.size();
         }
 
@@ -133,7 +133,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
 
             @Override
-            public String toString() {
+            final public String toString() {
                 return super.toString() + " '" + movieContentView.getText() + "'";
             }
         }

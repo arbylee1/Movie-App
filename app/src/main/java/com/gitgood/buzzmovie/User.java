@@ -54,71 +54,71 @@ public class User {
         }
     }
 
-    public String getEmail() {
+    final public String getEmail() {
         return email;
     }
 
-    public String getName() {
+    final public String getName() {
         return name;
     }
 
-    public String getUserName() {
+    final public String getUserName() {
         return userName;
     }
 
-    public String getPassword() { return password; }
+    final public String getPassword() { return password; }
 
-    public String getMajor() {
+    final public String getMajor() {
         return major;
     }
 
-    public String getInterests() {
+    final public String getInterests() {
         return interests;
     }
 
-    public void setEmail(String input) {
+    final public void setEmail(String input) {
         this.email = input;
     }
 
-    public void setName(String input) {
+    final public void setName(String input) {
         this.name = input;
     }
 
-    public void setUserName(String input) {
+    final public void setUserName(String input) {
         this.userName = input;
     }
 
-    public void setPassword(String input) {this.password = input; }
+    final public void setPassword(String input) {this.password = input; }
 
-    public void setMajor(String input) {
+    final public void setMajor(String input) {
         this.major = input;
     }
 
-    public void setInterests(String input) {
+    final public void setInterests(String input) {
         this.interests = input;
     }
 
-    public boolean getAdminStatus() {
+    final public boolean getAdminStatus() {
         return isAdmin;
     }
 
-    public void createAdmin() {
+    final public void createAdmin() {
         this.isAdmin = true;
     }
 
-    public void ban() {
+    final public void ban() {
         this.isBanned = true;
     }
 
-    public void unBan() {
+    final public void unBan() {
         this.isBanned = false;
     }
 
-    public boolean getBanStatus() {
+    final public boolean getBanStatus() {
         return isBanned;
     }
 
-    public String toString() {
+    final public String toString() {
         return (userName + " " + name + " " + isAdmin + " " + isBanned);
     }
 }
