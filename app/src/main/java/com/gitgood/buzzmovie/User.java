@@ -1,7 +1,5 @@
 package com.gitgood.buzzmovie;
 
-import java.util.Map;
-
 /**
  * Created by Jeff on 2/15/2016.
  * User infoholder class. Will act
@@ -9,110 +7,117 @@ import java.util.Map;
  * a subclass of User.
  */
 public class User {
-    public static User currentUser;
-    private String username;
-    private String authToken;
-    private String name;
-    private String major;
-    private String email;
-    private String interests;
-    private boolean isAdmin;
-    private boolean isBanned;
-    private Map<String, Float> ratings;
-
-    public User(String username, String authToken, String name, String major, String email,
-                String interests, boolean isAdmin, boolean isBanned, Map<String, Float> ratings) {
-        this.username = username;
-        this.authToken = authToken;
+    public User(String email, String name, String userName, String password, String major) {
         this.email = email;
         this.name = name;
-        this.username = username;
+        this.userName = userName;
+        this.password = password;
         this.major = major;
-        this.interests = interests;
-        this.isAdmin = isAdmin;
-        this.isBanned = isBanned;
-        this.ratings = ratings;
+        this.interests = "";
+        this.isAdmin = false;
+        this.isBanned = false;
     }
 
-    public User(String username, Boolean isBanned) {
-        this.username = username;
+    public User(String name, String userName, String password) {
+        this.email = "";
+        this.name = name;
+        this.userName = userName;
+        this.password = password;
+        this.major = "";
+        this.interests = "";
+    }
+
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
+    public User(String username, String name, Boolean isBanned, Boolean isAdmin) {
+        this.userName = username;
         if (name != null) {
             this.name = name;
         }
         if (isBanned != null) {
             this.isBanned = isBanned;
         }
+        if (isAdmin != null ) {
+            this.isAdmin = isAdmin;
+        }
     }
-
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public String getUsername() {
-        return username;
+    public final String getUserName() {
+        return userName;
     }
 
-    public String getAuthToken() { return authToken; }
+    public final String getPassword() { return password; }
 
-    public String getMajor() {
+    public final String getMajor() {
         return major;
     }
 
-    public String getInterests() {
+    public final String getInterests() {
         return interests;
     }
 
-    public void setEmail(String input) {
+    public final void setEmail(String input) {
         this.email = input;
     }
 
-    public void setName(String input) {
+    public final void setName(String input) {
         this.name = input;
     }
 
-    public void setUserName(String input) {
-        this.username = input;
+    public final void setUserName(String input) {
+        this.userName = input;
     }
 
-    public void setAuthToken(String input) {this.authToken = input; }
+    public final void setPassword(String input) {this.password = input; }
 
-    public void setMajor(String input) {
+    public final void setMajor(String input) {
         this.major = input;
     }
 
-    public void setInterests(String input) {
+    public final void setInterests(String input) {
         this.interests = input;
     }
 
-    public boolean getAdminStatus() {
+    public final boolean getAdminStatus() {
         return isAdmin;
     }
 
-    public void createAdmin() {
+    public final void createAdmin() {
         this.isAdmin = true;
     }
 
-    public void ban() {
+    public final void ban() {
         this.isBanned = true;
     }
 
-    public void unBan() {
+    public final void unBan() {
         this.isBanned = false;
     }
 
-    public boolean getBanStatus() {
+    public final boolean getBanStatus() {
         return isBanned;
     }
 
-    public String toString() {
-        return (username + " " + name + " " + isAdmin + " " + isBanned);
+    public final String toString() {
+        return (userName + " " + name + " " + isAdmin + " " + isBanned);
     }
 
-    public Map<String, Float> getRatings() {
-        return ratings;
-    }
+    private String email;
+    private String name;
+    private String userName;
+    private String password;
+    private String major;
+    private String interests;
+    private boolean isAdmin;
+    private boolean isBanned;
 }

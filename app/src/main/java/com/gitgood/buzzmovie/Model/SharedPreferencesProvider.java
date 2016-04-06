@@ -23,8 +23,10 @@ public class SharedPreferencesProvider implements ProviderInterface {
     private static SharedPreferencesProvider sharedPreferencesProvider;
     private SharedPreferences userInfo;
     private SharedPreferences movieInfo;
+    private SharedPreferences users;
     private SharedPreferences.Editor userInfoEditor;
     private SharedPreferences.Editor movieInfoEditor;
+    private SharedPreferences.Editor usersEditor;
     private SharedPreferencesProvider (Context context) {
         this.context = context;
         userInfo = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
