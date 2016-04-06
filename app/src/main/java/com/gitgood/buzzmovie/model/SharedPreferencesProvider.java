@@ -27,8 +27,8 @@ public class SharedPreferencesProvider implements ProviderInterface {
     private SharedPreferences.Editor movieInfoEditor;
     private SharedPreferencesProvider (Context context) {
         this.context = context;
-        userInfo = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        movieInfo = context.getSharedPreferences("movieInfo", Context.MODE_PRIVATE);
+        userInfo = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        movieInfo = context.getSharedPreferences("MovieInfo", Context.MODE_PRIVATE);
         userInfoEditor = userInfo.edit();
         movieInfoEditor = movieInfo.edit();
     }
@@ -41,10 +41,10 @@ public class SharedPreferencesProvider implements ProviderInterface {
     }
     @Override
     public void registerUser(String username, String password, boolean isAdmin, Callback<String> callback) {
-        String ret = userInfo.getString(username, "duplicate");
-        if(!ret.equals("duplicate")) {
+        String ret = userInfo.getString(username, null);
+        if(ret == null) {
             userInfoEditor.putString(username, password);
-            userInfoEditor.putString("users",userInfo.getString("users", "") + username + ",");
+            userInfoEditor.putString(username, "duplicate");
             userInfoEditor.commit();
             ret = "success";
         }
@@ -55,9 +55,9 @@ public class SharedPreferencesProvider implements ProviderInterface {
     public void loginUser(String username, String password, Callback<JSONObject> callback) {
         JSONObject ret = new JSONObject();
         try {
-            if (password.equals(userInfo.getString(username + "password", null))) {
+            if (password.equals(userInfo.getString(username + "_password", null))) {
                 String authToken = String.valueOf(rand.nextInt()) + String.valueOf(rand.nextInt());
-                userInfoEditor.putString(username + "authToken", authToken);
+                userInfoEditor.putString(username + "_authToken", authToken);
                 userInfoEditor.commit();
                 ret.put("username", username);
                 ret.put("authToken", authToken);
@@ -82,11 +82,11 @@ public class SharedPreferencesProvider implements ProviderInterface {
     public void updateProfile(String username, String authToken, JSONObject values, Callback<JSONObject> callback) {
         JSONObject ret = values;
         try {
-            if (authToken.equals(userInfo.getString(username + "authToken", null))) {
-                userInfoEditor.putString(username + "name", values.getString("name"));
-                userInfoEditor.putString(username + "major", values.getString("major"));
-                userInfoEditor.putString(username + "email", values.getString("email"));
-                userInfoEditor.putString(username + "interests", values.getString("interests"));
+            if (authToken.equals(userInfo.getString(username + "_authToken", null))) {
+                userInfoEditor.putString(username + "_name", values.getString("name"));
+                userInfoEditor.putString(username + "_major", values.getString("major"));
+                userInfoEditor.putString(username + "_email", values.getString("email"));
+                userInfoEditor.putString(username + "_interests", values.getString("interests"));
                 userInfoEditor.commit();
             } else {
                 ret = new JSONObject("{\"error\":\"incorrect\"}");
@@ -101,11 +101,11 @@ public class SharedPreferencesProvider implements ProviderInterface {
     public void getProfile(String username, String authToken, Callback<JSONObject> callback) {
         JSONObject ret = new JSONObject();
         try {
-            if (authToken.equals(userInfo.getString(username + "authToken", null))) {
-                ret.put("name", userInfo.getString(username + "name", "Set Name"));
-                ret.put("major", userInfo.getString(username + "major", "Set Major"));
-                ret.put("email", userInfo.getString(username + "email", "Set Email"));
-                ret.put("interests", userInfo.getString(username + "interests", "Set Interests"));
+            if (authToken.equals(userInfo.getString(username + "_authToken", null))) {
+                ret.put("name", userInfo.getString(username + "_name", "Set Name"));
+                ret.put("major", userInfo.getString(username + "_major", "Set Major"));
+                ret.put("email", userInfo.getString(username + "_email", "Set Email"));
+                ret.put("interests", userInfo.getString(username + "_interests", "Set Interests"));
             } else {
                 ret.put("error", "incorrect");
             }
@@ -119,11 +119,11 @@ public class SharedPreferencesProvider implements ProviderInterface {
     public void getAllUsers(String username, String authToken, Callback<JSONArray> callback) {
         JSONArray ret = new JSONArray();
         try {
-            if (authToken.equals(userInfo.getString(username + "authToken", null)) &&
-                    userInfo.getBoolean("isAdmin", false)) {
+            if (authToken.equals(userInfo.getString(username + "_authToken", null)) &&
+                    userInfo.getBoolean("_isAdmin", false)) {
                 String users = userInfo.getString("users", "");
                 for(String user: users.split(",")) {
-                    ret.put(new JSONArray(new Object[] {user, userInfo.getBoolean(user + "isBanned", false) }));
+                    ret.put(new JSONArray(new Object[] {user, userInfo.getBoolean(user + "_isBanned", false) }));
                 }
             } else {
                 ret.put(false);
@@ -158,8 +158,8 @@ public class SharedPreferencesProvider implements ProviderInterface {
     public void rateMovie(String username, String authToken, String movie, String major, float oldRating, float newRating, Callback<String> callback) {
         String sNewRating = String.valueOf(newRating);
         String sOldRating = String.valueOf(oldRating);
-        if (authToken.equals(userInfo.getString(username + "authToken", null))) {
-            String userRatingString = userInfo.getString(username + "ratings", "");
+        if (authToken.equals(userInfo.getString(username + "_authToken", null))) {
+            String userRatingString = userInfo.getString(username + "_ratings", "");
             String movieRatingString=  movieInfo.getString(movie, "");
             if(oldRating == 0) {
                 userRatingString = userRatingString + movie + ':' + sNewRating + ',';
@@ -168,7 +168,7 @@ public class SharedPreferencesProvider implements ProviderInterface {
                 userRatingString = userRatingString.replace(movie + ':' + sOldRating, movie + sNewRating);
                 movieRatingString = movieRatingString.replace(major + ':' + sOldRating, major + sNewRating);
             }
-            userInfoEditor.putString(username + "ratings", userRatingString);
+            userInfoEditor.putString(username + "_ratings", userRatingString);
             userInfoEditor.commit();
             movieInfoEditor.putString(movie, movieRatingString);
             movieInfoEditor.commit();

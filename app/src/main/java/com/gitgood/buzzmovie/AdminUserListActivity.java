@@ -87,7 +87,7 @@ public class AdminUserListActivity extends AppCompatActivity {
             Log.d("Hiooo", String.valueOf(position));
             User user = users.get(position);
             holder.movieItem = user;
-            holder.movieIdView.setText(user.getUserName());
+            holder.movieIdView.setText(user.getUsername());
             holder.movieIdView.setTextSize(16);
 
 
@@ -113,7 +113,7 @@ public class AdminUserListActivity extends AppCompatActivity {
                     User user = holder.movieItem;
                     SharedPreferences userinfo = getSharedPreferences(
                             getResources().getString(R.string.UserInfo), Context.MODE_PRIVATE);
-                    Boolean banned = CurrentUser.getInstance().toggleIsBan(userinfo, holder.movieItem.getUserName());
+                    Boolean banned = CurrentUser.getInstance().toggleIsBan(userinfo, holder.movieItem.getUsername());
                     Log.d("Hi", String.valueOf(System.identityHashCode(holder.movieItem)));
                     if (banned) {
                         holder.itemView.setBackgroundColor(Color.RED);
