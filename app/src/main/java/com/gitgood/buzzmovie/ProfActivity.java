@@ -70,7 +70,7 @@ public class ProfActivity extends AppCompatActivity {
                 editor2.putString(currentUsername + "_major", mmMajor.getText().toString());
                 editor2.putString(currentUsername + "_interests", mInterest.getText().toString());
                 editor2.apply();
-                Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+                Intent i = new Intent(getApplicationContext(), ProfActivity.class);
                 Toast toast = Toast.makeText(getApplicationContext(), "Profile Succesfully updated", Toast.LENGTH_SHORT);
                 toast.show();
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
