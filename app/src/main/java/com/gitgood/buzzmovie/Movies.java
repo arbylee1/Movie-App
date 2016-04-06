@@ -21,12 +21,19 @@ public final class Movies {
          */
         public static final Map<String, Movie> ITEM_MAP = new HashMap<>();
 
+        /*
+        * method to add a movie to the total collection of movies in system
+        * @param item Movie object that is added to ourt cumalitve collection
+         */
         public static void addItem(Movie item) {
             ITEMS.add(item);
             ITEM_MAP.put(item.getRottenTomatoID(), item);
         }
-     public static void clear() {
-         ITEMS.clear();
-         ITEM_MAP.clear();
-     }
+            /*
+        * Method to clear all the whole collection
+         */
+         public static void clear() {
+             ITEMS.clear();
+             ITEM_MAP.clear();
+         }
 }

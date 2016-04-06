@@ -22,26 +22,65 @@ public final class CurrentUser {
     private CurrentUser() {
     }
 
+    /**
+     * Getter method for the static currentUser class. retrieves the current user
+     * @return Currentuser the instance of Currentuser, with all values of the user loaded and ready
+     * to be read/set
+     */
     public static CurrentUser getInstance() {
         return currentUser;
     }
+
+    /**
+     *  setter method for username
+     *  @param username String value with username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
+
+    /**
+     *  setter method for password
+     *  @param passwordHash String value with hashed password
+     */
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
 
+    /**
+     *  setter method for isAdmin
+     *  @param isAdmin Boolean value with whether currentuser is an admin or not
+     */
     public void setUserIsAdmin(Boolean isAdmin) {this.isAdmin = isAdmin; }
 
+    /**
+     *  getter method for isAdmin
+     *  @return isAdmin Boolean value with whether currentuser is an admin or not
+     */
     public Boolean getIsAdmin() {return isAdmin; }
+
+    /**
+     *  getter method for username
+     *  @return username String value with username
+     */
     public String getUsername() {
         return username;
     }
+
+    /**
+     *  getter method for password
+     *  @return passwordHash String value with hashed password
+     */
     public String getPasswordHash() {
         return passwordHash;
     }
 
+    /**
+     *  method to get all users in system
+     *  @param userinfo Sharedpreference object utility used to store and pull data from internal
+     *  data storage
+     *  @return List<User> List datatype with all Users in system
+     */
     public List<User> getAllUsers(SharedPreferences userinfo) {
     Map <String,?> all = userinfo.getAll();
         Map <String,String> usernames = new HashMap <String,String>();
@@ -95,6 +134,13 @@ public final class CurrentUser {
         return users;
     }
 
+    /**
+     *  method to get all users in system
+     *  @param userinfo Sharedpreference object utility used to store and pull data from internal
+     *  data storage
+     *  @param username String of the username to be toggled
+     *  @return boolean of current user isBanned var after it has been toggled
+     */
     public boolean toggleIsBan(SharedPreferences userinfo, String username) {
         String ban = "_ban";
         Boolean isbanned = userinfo.getBoolean(username + ban, false);
