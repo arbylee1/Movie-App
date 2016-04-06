@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 
 public class ProfActivity extends AppCompatActivity {
 
@@ -77,6 +79,9 @@ public class ProfActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+    private void onPostExecute(JSONObject result) {
+
     }
 
 }
