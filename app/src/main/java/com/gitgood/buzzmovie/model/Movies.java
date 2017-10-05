@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

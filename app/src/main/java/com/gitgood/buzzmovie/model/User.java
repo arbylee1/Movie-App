@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.model;
 
 /**
  * Created by Jeff on 2/15/2016.

@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.model;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Created by Orange Blossom on 2/28/2016.
+ * Created by Albert Li on 2/28/2016.
  * This static object keeps track of the Current users and can be called anywhere in the appilcation
  * this makes user tracking and admin verification easy. Only gets reset at login screen
  */

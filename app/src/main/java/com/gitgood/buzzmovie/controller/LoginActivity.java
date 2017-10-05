@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.gitgood.buzzmovie.model.CurrentUser;
+import com.gitgood.buzzmovie.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

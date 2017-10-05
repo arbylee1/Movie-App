@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.controller;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.gitgood.buzzmovie.R;
+import com.gitgood.buzzmovie.model.Rating;
+import com.gitgood.buzzmovie.model.Ratings;
+
 import java.util.List;
 import java.util.Set;
 

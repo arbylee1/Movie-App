@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.controller;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.graphics.Color;
+
+import com.gitgood.buzzmovie.model.CurrentUser;
+import com.gitgood.buzzmovie.R;
+import com.gitgood.buzzmovie.model.User;
 
 import java.util.List;
 public class AdminUserListActivity extends AppCompatActivity {

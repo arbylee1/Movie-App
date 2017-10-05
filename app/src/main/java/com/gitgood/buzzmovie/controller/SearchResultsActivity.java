@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.controller;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -16,6 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.view.KeyEvent;
+
+import com.gitgood.buzzmovie.model.Movie;
+import com.gitgood.buzzmovie.model.Movies;
+import com.gitgood.buzzmovie.R;
+
 import java.util.List;
 
 public class SearchResultsActivity extends AppCompatActivity {

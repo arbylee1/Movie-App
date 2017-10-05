@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,6 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.gitgood.buzzmovie.model.CurrentUser;
+import com.gitgood.buzzmovie.model.Movie;
+import com.gitgood.buzzmovie.model.Movies;
+import com.gitgood.buzzmovie.R;
+import com.gitgood.buzzmovie.model.Ratings;
 
 import java.text.DecimalFormat;
 

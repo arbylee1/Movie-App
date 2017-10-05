@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.gitgood.buzzmovie.model.CurrentUser;
+import com.gitgood.buzzmovie.model.Movie;
+import com.gitgood.buzzmovie.model.Movies;
+import com.gitgood.buzzmovie.R;
+import com.gitgood.buzzmovie.model.Ratings;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.model;
 
 import java.io.Serializable;
 
@@ -66,10 +66,4 @@ public class Movie implements Serializable {
     public final String toString() {
         return "Name: " + title + " (" + year + "), Rating: " + rating;
     }
-
-//    public Map<String, Rating> GetRating(SharedPreferences movieData){
-//        this.movieData = movieData;
-//        return new Map<String, Rating>;
-//    }
-
 }

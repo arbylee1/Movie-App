@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.ViewAction;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 
@@ -19,9 +18,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.espresso.Espresso;
-import android.widget.TextView;
 
-import junit.framework.Assert;
+import com.gitgood.buzzmovie.controller.ProfActivity;
 
 import java.util.concurrent.TimeUnit;
 

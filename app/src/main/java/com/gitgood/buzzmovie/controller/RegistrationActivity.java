@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-import org.json.JSONException;
+
+import com.gitgood.buzzmovie.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

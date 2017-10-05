@@ -1,4 +1,4 @@
-package com.gitgood.buzzmovie;
+package com.gitgood.buzzmovie.model;
 
 import android.content.SharedPreferences;
 import android.util.Log;
